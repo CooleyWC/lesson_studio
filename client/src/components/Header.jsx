@@ -1,8 +1,8 @@
 import React from 'react';
 import NavBar from './NavBar';
-import {Container, Typography} from '@mui/material'
+import {Container} from '@mui/material'
 
-function Header(props) {
+function Header() {
     return (
         <Container>
             <NavBar />

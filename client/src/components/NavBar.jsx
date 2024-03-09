@@ -21,8 +21,7 @@ function NavBar() {
     const handleCloseNavMenu = ()=>{
         setAnchorElNav(null)
     }
-
-
+    
     return (
         <AppBar position='fixed' sx={{backgroundColor: 'gray'}}>
             <Container maxWidth='xl'>

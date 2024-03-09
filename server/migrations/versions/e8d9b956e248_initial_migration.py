@@ -1,8 +1,8 @@
-"""added instuctor model
+"""initial migration
 
-Revision ID: b821d0dc1d6f
-Revises: 228fff358323
-Create Date: 2024-03-05 15:51:17.865462
+Revision ID: e8d9b956e248
+Revises: 
+Create Date: 2024-03-08 15:49:31.908095
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b821d0dc1d6f'
-down_revision = '228fff358323'
+revision = 'e8d9b956e248'
+down_revision = None
 branch_labels = None
 depends_on = None
 

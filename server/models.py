@@ -1,7 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 
-from config import db
+from config import db, bcrypt
 
 
 # class Student(db.Model, SerializerMixin):
@@ -12,6 +12,8 @@ from config import db
 #     email=db.Column(db.String, unique=True, nullable=False)
 #     age=db.Column(db.Integer, db.CheckConstraint('age < 3'), nullable=False)
 #     primary_instrument=db.Columns(db.String, nullable=False)
+
+#     _password_hash = 
 
 
 class Instructor(db.Model, SerializerMixin):

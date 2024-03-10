@@ -6,7 +6,7 @@ function App() {
   const [instructors, setData] = useState([])
 
   useEffect(()=>{
-    fetch('http://127.0.1:5555/instructors')
+    fetch('/api/instructors')
     .then((r)=>r.json())
     .then((instructors)=> {
       setData(instructors)
@@ -17,8 +17,8 @@ function App() {
 
 
   const instructorNames = instructors.map((instructor)=>(
-    <div>
-      <p key={instructor.id}>{instructor.name}</p>
+    <div key={instructor.id}>
+      <p >{instructor.name}</p>
       <h2>{instructor.instrument}</h2>
       <img src={instructor.photo}></img>
     </div>

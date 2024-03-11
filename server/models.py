@@ -6,7 +6,7 @@ from config import db, bcrypt
 
 
 class User(db.Model, SerializerMixin):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     id=db.Column(db.Integer, primary_key=True)
     username=db.Column(db.String, unique=True, nullable=False)
@@ -16,6 +16,13 @@ class User(db.Model, SerializerMixin):
     primary_instrument=db.Column(db.String, nullable=False)
 
     _password_hash = db.Column(db.String, nullable=False)
+
+    # serializer rules
+
+    # relationships
+
+    #  association proxys
+
 
     # __table_args__ = (
     #     db.CheckConstraint('(age <3) name=age_check'),
@@ -49,8 +56,20 @@ class Instructor(db.Model, SerializerMixin):
     instrument=db.Column(db.String, nullable=False)
     photo=db.Column(db.String)
 
-# class Lesson(db.Model, SerializerMixin):
-#     __tablename__ = 'lessons'
+    # serializer rules
 
-#     id=db.Column(db.Integer, primary_key=True)
-#     date=db.Column()
+    # relationships
+
+    #  association proxys
+
+class Lesson(db.Model, SerializerMixin):
+    __tablename__ = 'lessons'
+
+    id=db.Column(db.Integer, primary_key=True)
+    user_rating=db.Column(db.Boolean)
+    date=db.Column(db.String)
+
+    user_id=db.Column(db.Integer, db.ForeignKey('users.id'))
+    instructor_id=db.Column(db.Integer, db.ForeignKey('instructors.id'))
+
+    # relationships

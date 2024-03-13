@@ -8,7 +8,8 @@ from faker import Faker
 
 from app import app
 
-import datetime
+from datetime import datetime
+# import datetime
 
 from models import db, Instructor, User, Lesson
 
@@ -47,8 +48,8 @@ if __name__ == "__main__":
 
       print('adding lessons')
 
-      lesson_1 = Lesson(user_rating=True, date=datetime.date(2024,3,12), user_id=user_1.id, instructor_id=drums_1.id)
-      lesson_2 = Lesson(user_rating=False, date=datetime.date(2024,4,15), user_id=user_2.id, instructor_id=piano_2.id)
+      lesson_1 = Lesson(user_rating=True, date_time=datetime(2024,3,1,10,10,10), user_id=user_1.id, instructor_id=drums_1.id)
+      lesson_2 = Lesson(user_rating=False, date_time=datetime(2024,4,15,20,10,0), user_id=user_2.id, instructor_id=piano_2.id)
 
       db.session.add_all([lesson_1, lesson_2])
 

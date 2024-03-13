@@ -8,6 +8,8 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
+    serialize_rules = ('-_password_hash','-lessons.user','-lessons.user_id',)
+
     id=db.Column(db.Integer, primary_key=True)
     username=db.Column(db.String, unique=True, nullable=False)
     email=db.Column(db.String, unique=True, nullable=False)
@@ -19,8 +21,6 @@ class User(db.Model, SerializerMixin):
     lessons = db.relationship('Lesson', back_populates='user', cascade='all, delete-orphan')
 
     instructors = association_proxy('lessons', 'instructor')
-
-    serialize_rules = ('_password_hash','-lessons.user',)
 
     @hybrid_property
     def password_hash(self):
@@ -64,7 +64,7 @@ class Lesson(db.Model, SerializerMixin):
 
     id=db.Column(db.Integer, primary_key=True)
     user_rating=db.Column(db.Boolean)
-    date=db.Column(db.Date)
+    date_time=db.Column(db.DateTime)
 
     user_id=db.Column(db.Integer, db.ForeignKey('users.id'))
     instructor_id=db.Column(db.Integer, db.ForeignKey('instructors.id'))

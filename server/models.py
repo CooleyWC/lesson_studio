@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
 
 from config import db, bcrypt
 
@@ -8,7 +9,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash','-lessons.user','-lessons.user_id',)
+    serialize_rules = ('-_password_hash','-lessons.user','-lessons.user_id', '-instructors.users',)
 
     id=db.Column(db.Integer, primary_key=True)
     username=db.Column(db.String, unique=True, nullable=False)
@@ -20,7 +21,10 @@ class User(db.Model, SerializerMixin):
 
     lessons = db.relationship('Lesson', back_populates='user', cascade='all, delete-orphan')
 
-    instructors = association_proxy('lessons', 'instructor')
+    # instructors = association_proxy('lessons', 'instructor')
+
+    # new
+    instructors = db.relationship('Instructor', secondary='lessons', back_populates='users')
 
     @hybrid_property
     def password_hash(self):
@@ -38,11 +42,25 @@ class User(db.Model, SerializerMixin):
             self._password_hash, password.encode('utf-8')
         )
     
+    @validates('email')
+    def validate_email(self, key, address):
+        if '@' not in address:
+            raise ValueError('invalid email input/format')
+        return address
+    
+    @validates('username')
+    def validate_username(self, key, name):
+        if not (3 <= len(name) <= 15):
+            raise ValueError('username must be between 3 and 15 characters')
+        return name
+    
     def __repr__(self):
         return f'<User {self.id}: {self.username}'
 
 class Instructor(db.Model, SerializerMixin):
     __tablename__ = 'instructors'
+
+    serialize_rules = ('-lessons.instructor', '-users.instructors',)
 
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String, unique=True, nullable=False)
@@ -54,13 +72,16 @@ class Instructor(db.Model, SerializerMixin):
 
     lessons = db.relationship('Lesson', back_populates='instructor', cascade='all, delete-orphan')
 
-    serialize_rules = ('-appointments.instructor','-lessons.instructor',)
+    # new
+    users = db.relationship('User', secondary='lessons', back_populates='instructors')
 
     def __repr__(self):
         return f'<Instructor {self.id}: {self.name}'
 
 class Lesson(db.Model, SerializerMixin):
     __tablename__ = 'lessons'
+
+    serialize_rules = ('-user.lessons', '-instructor.lessons',)
 
     id=db.Column(db.Integer, primary_key=True)
     user_rating=db.Column(db.Boolean)
@@ -72,7 +93,6 @@ class Lesson(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='lessons')
     instructor = db.relationship('Instructor', back_populates='lessons')
 
-    serialize_rules = ('-user.lessons', '-instructor.lessons',)
 
     def __repr__(self):
         user=self.user.username if self.user else None

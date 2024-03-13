@@ -11,22 +11,16 @@ class User(db.Model, SerializerMixin):
     id=db.Column(db.Integer, primary_key=True)
     username=db.Column(db.String, unique=True, nullable=False)
     email=db.Column(db.String, unique=True, nullable=False)
-    age=db.Column(db.Integer, db.CheckConstraint('age < 3 name=age_check'), nullable=False)
-    age=db.Column(db.Integer, nullable=False)
+    age=db.Column(db.Integer, db.CheckConstraint('age < 3', name='age_check'), nullable=False)
     primary_instrument=db.Column(db.String, nullable=False)
 
     _password_hash = db.Column(db.String, nullable=False)
 
-    # serializer rules
+    lessons = db.relationship('Lesson', back_populates='user', cascade='all, delete-orphan')
 
-    # relationships
+    instructors = association_proxy('lessons', 'instructor')
 
-    #  association proxys
-
-
-    # __table_args__ = (
-    #     db.CheckConstraint('(age <3) name=age_check'),
-    # )
+    serialize_rules = ('_password_hash','-lessons.user',)
 
     @hybrid_property
     def password_hash(self):
@@ -43,7 +37,9 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8')
         )
-
+    
+    def __repr__(self):
+        return f'<User {self.id}: {self.username}'
 
 class Instructor(db.Model, SerializerMixin):
     __tablename__ = 'instructors'
@@ -56,20 +52,30 @@ class Instructor(db.Model, SerializerMixin):
     instrument=db.Column(db.String, nullable=False)
     photo=db.Column(db.String)
 
-    # serializer rules
+    lessons = db.relationship('Lesson', back_populates='instructor', cascade='all, delete-orphan')
 
-    # relationships
+    serialize_rules = ('-appointments.instructor','-lessons.instructor',)
 
-    #  association proxys
+    def __repr__(self):
+        return f'<Instructor {self.id}: {self.name}'
 
 class Lesson(db.Model, SerializerMixin):
     __tablename__ = 'lessons'
 
     id=db.Column(db.Integer, primary_key=True)
     user_rating=db.Column(db.Boolean)
-    date=db.Column(db.String)
+    date=db.Column(db.Date)
 
     user_id=db.Column(db.Integer, db.ForeignKey('users.id'))
     instructor_id=db.Column(db.Integer, db.ForeignKey('instructors.id'))
 
-    # relationships
+    user = db.relationship('User', back_populates='lessons')
+    instructor = db.relationship('Instructor', back_populates='lessons')
+
+    serialize_rules = ('-user.lessons', '-instructor.lessons',)
+
+    def __repr__(self):
+        user=self.user.username if self.user else None
+        instructor=self.instructor.name if self.instructor else None
+        return f'<Lesson {user}: {instructor}'
+

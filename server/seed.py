@@ -9,14 +9,12 @@ from faker import Faker
 from app import app
 
 from datetime import datetime
-# import datetime
 
 from models import db, Instructor, User, Lesson
 
 if __name__ == "__main__":
   with app.app_context():
       print("Starting seed...")
-      # Seed code goes here!
       Instructor.query.delete()
       User.query.delete()
       Lesson.query.delete()

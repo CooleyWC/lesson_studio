@@ -9,7 +9,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash','-lessons.user','-lessons.user_id', )
+    serialize_rules = ('-_password_hash','-lessons.user', '-lessons.instructor', '-instructors.lessons', '-instructors.users',)
 
     id=db.Column(db.Integer, primary_key=True)
     username=db.Column(db.String, unique=True, nullable=False)
@@ -20,11 +20,8 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String, nullable=False)
 
     lessons = db.relationship('Lesson', back_populates='user', cascade='all, delete-orphan')
-
-    instructors = association_proxy('lessons', 'instructor')
-
-    # new
-    # instructors = db.relationship('Instructor', secondary='lessons', back_populates='users')
+    instructors = db.relationship('Instructor', secondary='lessons', back_populates='users')
+    # instructors = association_proxy('lessons', 'instructor')
 
     @hybrid_property
     def password_hash(self):
@@ -69,15 +66,13 @@ class User(db.Model, SerializerMixin):
         return primary_instrument
 
     
-    # @validates('primary_instrument')
-    
     def __repr__(self):
         return f'<User {self.id}: {self.username}'
 
 class Instructor(db.Model, SerializerMixin):
     __tablename__ = 'instructors'
 
-    serialize_rules = ('-lessons.instructor',)
+    serialize_rules = ('-lessons.user.lessons', '-lessons.user.instructors', '-lessons.instructor', '-users',)
 
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String, nullable=False)
@@ -88,9 +83,7 @@ class Instructor(db.Model, SerializerMixin):
     photo=db.Column(db.String)
 
     lessons = db.relationship('Lesson', back_populates='instructor', cascade='all, delete-orphan')
-
-    # new
-    # users = db.relationship('User', secondary='lessons', back_populates='instructors')
+    users = db.relationship('User', secondary='lessons', back_populates='instructors')
 
     @validates('email')
     def validate_email(self, key, address):

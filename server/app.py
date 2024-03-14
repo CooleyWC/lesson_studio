@@ -54,15 +54,6 @@ api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')
 
 class Login(Resource):
    def post(self):
-
-      # json=request.get_json()
-      # user=User.query.filter(User.email==json['email']).first()
-      # if user:
-      #    if user.authenticate(json.get('password')):
-      #       session['user_id']=user.id
-      #       return user.to_dict(), 200
-      #    else:
-      #       return {'error': 'invalid'}
       try:
          email=request.get_json()['email']
          user=User.query.filter(User.email==email).first()
@@ -75,6 +66,18 @@ class Login(Resource):
          return error, 401
       
 api.add_resource(Login, '/api/login', endpoint='login')
+
+class Logout(Resource):
+   def delet(self):
+      user_id=session['user_id']
+      if user_id:
+         session['user_id'] = None
+         return {}, 204
+      else:
+         error = {'error': 'not authorized'}
+         return error, 401
+      
+api.add_resource(Logout, '/api/logout', endpoint='logout')
 
 class Instructors(Resource):
     def get(self):

@@ -9,22 +9,22 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash','-lessons.user','-lessons.user_id', '-instructors.users',)
+    serialize_rules = ('-_password_hash','-lessons.user','-lessons.user_id', )
 
     id=db.Column(db.Integer, primary_key=True)
     username=db.Column(db.String, unique=True, nullable=False)
     email=db.Column(db.String, unique=True, nullable=False)
-    age=db.Column(db.Integer, db.CheckConstraint('age < 3', name='age_check'), nullable=False)
+    age=db.Column(db.Integer, nullable=False)
     primary_instrument=db.Column(db.String, nullable=False)
 
     _password_hash = db.Column(db.String, nullable=False)
 
     lessons = db.relationship('Lesson', back_populates='user', cascade='all, delete-orphan')
 
-    # instructors = association_proxy('lessons', 'instructor')
+    instructors = association_proxy('lessons', 'instructor')
 
     # new
-    instructors = db.relationship('Instructor', secondary='lessons', back_populates='users')
+    # instructors = db.relationship('Instructor', secondary='lessons', back_populates='users')
 
     @hybrid_property
     def password_hash(self):
@@ -42,17 +42,34 @@ class User(db.Model, SerializerMixin):
             self._password_hash, password.encode('utf-8')
         )
     
+    @validates('username')
+    def validate_username(self, key, username):
+        if not (3 <= len(username) <= 15):
+            raise ValueError('username must be between 3 and 15 characters')
+        return username
+    
     @validates('email')
     def validate_email(self, key, address):
         if '@' not in address:
             raise ValueError('invalid email input/format')
         return address
     
-    @validates('username')
-    def validate_username(self, key, name):
-        if not (3 <= len(name) <= 15):
-            raise ValueError('username must be between 3 and 15 characters')
-        return name
+    @validates('age')
+    def validate_age(self, key, age):
+        if not isinstance(age, int) or age <= 3:
+            raise ValueError('age must be an integer greater than 3')
+        return age
+    
+    @validates('primary_instrument')
+    def validate_primary_instrument(self, key, primary_instrument):
+        VALID_INSTUMENTS = ['piano', 'drums', 'bass', 'guitar', 'trumpet','trombone', 'tuba', 'french horn', 'cello', 'violin', 'viola', 'voice']
+
+        if not any(instrument in primary_instrument for instrument in VALID_INSTUMENTS):
+            raise ValueError('need to select a instrument that we teach')
+        return primary_instrument
+
+    
+    # @validates('primary_instrument')
     
     def __repr__(self):
         return f'<User {self.id}: {self.username}'
@@ -60,10 +77,10 @@ class User(db.Model, SerializerMixin):
 class Instructor(db.Model, SerializerMixin):
     __tablename__ = 'instructors'
 
-    serialize_rules = ('-lessons.instructor', '-users.instructors',)
+    serialize_rules = ('-lessons.instructor',)
 
     id=db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.String, unique=True, nullable=False)
+    name=db.Column(db.String, nullable=False)
     email=db.Column(db.String, unique=True, nullable=False)
     bio=db.Column(db.String, nullable=False)
     experience=db.Column(db.Integer, nullable=False, default=0)
@@ -73,7 +90,39 @@ class Instructor(db.Model, SerializerMixin):
     lessons = db.relationship('Lesson', back_populates='instructor', cascade='all, delete-orphan')
 
     # new
-    users = db.relationship('User', secondary='lessons', back_populates='instructors')
+    # users = db.relationship('User', secondary='lessons', back_populates='instructors')
+
+    @validates('email')
+    def validate_email(self, key, address):
+        if '@' not in address:
+            raise ValueError('invalid email input/format')
+        return address
+    
+    @validates('name')
+    def validate_name(self, key, name):
+        if not (3 <= len(name) <= 30):
+            raise ValueError('name must be between 3 and 15 characters')
+        return name
+    
+    @validates('bio')
+    def validate_bio(self, key, bio):
+        if not (10 <= len(bio) <=250):
+            raise ValueError('bios must be between 10 and 250 characters')
+        return bio
+    
+    @validates('experience')
+    def validates_experience(self, key, experience):
+        if experience <= 1:
+            raise ValueError('instructors must have at least one year of teaching experience')
+        return experience
+    
+    @validates('instrument')
+    def validates_instrument(self, key, instructor_instrument):
+        VALID_INSTUMENTS = ['piano', 'drums', 'bass', 'guitar', 'trumpet','trombone', 'tuba', 'french horn', 'cello', 'violin', 'viola', 'voice']
+
+        if not any(instrument in instructor_instrument for instrument in VALID_INSTUMENTS):
+            raise ValueError('need to select a instrument that we teach')
+        return instructor_instrument
 
     def __repr__(self):
         return f'<Instructor {self.id}: {self.name}'

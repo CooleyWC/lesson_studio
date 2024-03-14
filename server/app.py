@@ -9,30 +9,22 @@ class Signup(Resource):
    def post(self):
       json = request.get_json()
 
-      user=User(
-         username=json.get('username'),
-         email=json.get('email'),
-         age=json.get('age'),
-         primary_instrument=json.get('primary_instrument')
-      )
-
-      user.password_hash = json['password']
-
       try:
+         user=User(
+            username=json.get('username'),
+            email=json.get('email'),
+            age=json.get('age'),
+            primary_instrument=json.get('primary_instrument')
+         )
+
+         user.password_hash = json['password']
+
          db.session.add(user)
          db.session.commit()
 
          session['user_id'] = user.id
 
-         response_data = {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'age': user.age,
-            'primary_instrument': user.primary_instrument
-         }
-
-         return response_data, 201
+         return user.to_dict(), 201
       
       except:
          error={'error': 'invalid input'}
@@ -62,13 +54,13 @@ class Login(Resource):
             session['user_id'] = user.id
             return user.to_dict(), 200
       except:
-         error = {'error': 'invalid email or password'}
+         error = {'error': 'you are logged out'}
          return error, 401
       
 api.add_resource(Login, '/api/login', endpoint='login')
 
 class Logout(Resource):
-   def delet(self):
+   def delete(self):
       user_id=session['user_id']
       if user_id:
          session['user_id'] = None

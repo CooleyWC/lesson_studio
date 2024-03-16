@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, FormControl, Typography, Grid, TextField, Box , Button, Divider} from '@mui/material';
 
+
 function Login() {
 
     const handleSubmit = (e)=>{
@@ -12,7 +13,15 @@ function Login() {
         console.log('new account')
     }
 
+    const containerStyle = {
+        marginTop: '150px', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    }
+
     const boxStyle = {
+        backgroundColor: '#E0E1DD',
         border: '1px solid grey', 
         borderRadius: '20px',
         paddingTop: '75px', 
@@ -29,7 +38,7 @@ function Login() {
     }
 
     return (
-        <Container  sx={{marginTop: '150px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Container className='container' sx={containerStyle}>
         <Box sx={boxStyle}>
             <form onSubmit={handleSubmit}>
                 <Grid container direction='column' justifyContent='center' alignItems='center'>
@@ -50,7 +59,7 @@ function Login() {
             </form>
             <Divider variant='middle' sx={{height: '4px', opacity: 1}}/>
             <Grid item sx={{marginTop: '10px'}}>
-                <Typography variant='body2' sx={{marginBottom:'20px'}}>
+                <Typography variant='body2' sx={{marginBottom:'20px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#13293d'}}>
                     Not yet enrolled? Sign up here
                 </Typography>
             </Grid>

@@ -10,8 +10,12 @@ const pages = [
         route: '/',
     },
     {
+        page: 'Faculty',
+        route: '/faculty',
+    },
+    {
         page: 'Login',
-        route: '/Login',
+        route: '/login',
     }
 ]
 

@@ -102,7 +102,7 @@ function Login() {
                     Not yet enrolled? Sign up here
                 </Typography>
             </Grid>
-                <Grid item sx={{marginBottom:'20px'}}>
+                <Grid item sx={{marginBottom:'20px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Button variant='contained' size='large' sx={createAccountBtnStyle} onClick={handleCreateAccount}>Create New Account</Button>
                 </Grid>
         </Box>

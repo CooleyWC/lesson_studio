@@ -3,6 +3,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import ErrorPage from './components/ErrorPage';
+import Faculty from './components/Faculty';
 
 const routes = [
     {
@@ -13,6 +14,10 @@ const routes = [
             {
                 path: '/',
                 element: <Home />,
+            },
+            {
+                path: '/faculty',
+                element: <Faculty />,
             },
             // why do this not need /api in front
             {

@@ -1,13 +1,10 @@
 import React from 'react';
-import { Container, FormControl, Typography, Grid, TextField, Box , Button, Divider} from '@mui/material';
+import { Container, FormControl, Typography, Grid, TextField, Box , Button, Divider, getFormLabelUtilityClasses} from '@mui/material';
+import {useFormik} from 'formik';
+import * as yup from 'yup';
 
 
 function Login() {
-
-    const handleSubmit = (e)=>{
-        e.preventDefault()
-        console.log('submitted')
-    }
 
     const handleCreateAccount = (e)=>{
         console.log('new account')
@@ -37,19 +34,61 @@ function Login() {
             {backgroundColor: 'darkgreen'}
     }
 
+    const loginSchema = yup.object({
+        email: yup
+            .string('Enter you email')
+            .email('Enter a valid email')
+            .required('Email is required'),
+        password: yup
+            .string('Enter your password')
+            .min(8, 'Password should be a minimun of 8 characters')
+            .required('Password is required')
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: loginSchema,
+        onSubmit: submitUser,
+    })
+
+    function submitUser(values){
+        console.log(values)
+    }
+    
+
     return (
         <Container className='container' sx={containerStyle}>
         <Box sx={boxStyle}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
                 <Grid container direction='column' justifyContent='center' alignItems='center'>
                     <Grid item sx={{marginTop: '20px', marginBottom:'20px'}}>
                         <FormControl>
-                            <TextField label="Enter Your Email"/>
+                            <TextField 
+                                id='email'
+                                name='email'
+                                label="Enter Your Email"
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
+                            />
                         </FormControl>
                     </Grid>
                     <Grid item sx={{marginBottom:'20px'}}>
                         <FormControl>
-                            <TextField label="Enter Your Password"/>
+                            <TextField 
+                                id='password'
+                                name='password'
+                                label="Enter Your Password"
+                                type='password'
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                helperText={formik.touched.password && formik.errors.password}
+                            />
                         </FormControl>
                     </Grid>
                     <Grid item sx={{marginBottom:'20px'}}>

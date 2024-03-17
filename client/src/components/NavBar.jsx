@@ -6,6 +6,10 @@ import React from 'react';
 
 const pages = [
     {
+        page: 'Home',
+        route: '/',
+    },
+    {
         page: 'Login',
         route: '/Login',
     }

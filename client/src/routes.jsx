@@ -20,7 +20,7 @@ const routes = [
                 element: <Login />,
             },
             {
-                path: '/api/signup',
+                path: '/signup',
                 element: <Signup />,
             }
         ],  

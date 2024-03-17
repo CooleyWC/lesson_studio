@@ -18,7 +18,7 @@ function Home() {
                     >
                     </CardMedia>
                     <Paper sx={{borderRadius: 0, paddingBottom: '30px'}}>
-                        <Typography>1. Pick a Teacher</Typography>
+                        <Typography sx={{paddingLeft: '20px'}}>1. Pick a Teacher</Typography>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={4}  >
@@ -28,7 +28,7 @@ function Home() {
                     >
                     </CardMedia>
                     <Paper sx={{borderRadius: 0, paddingBottom: '30px'}}>
-                        <Typography>2. Take Lessons</Typography>
+                        <Typography sx={{paddingLeft: '20px'}}>2. Take Lessons</Typography>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={4}  >
@@ -38,13 +38,13 @@ function Home() {
                     >
                     </CardMedia>
                     <Paper sx={{borderRadius: 0, paddingBottom: '30px'}}>
-                        <Typography>3. Become Awesome</Typography>
+                        <Typography sx={{paddingLeft: '20px'}}>3. Become Awesome</Typography>
                     </Paper>
                 </Grid>
             </Grid>
             <Grid container sx={{marginTop: '25px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <Grid item>
-                    <Button component={Link} to='/signup' variant='contained' size='large' sx={{backgroundColor: '#415A77', minWidth: '400px'}} onClick={handleFacultyClick}>Start Here: Meet The Faculty</Button>
+                    <Button component={Link} to='/faculty' variant='contained' size='large' sx={{backgroundColor: '#415A77', minWidth: '400px'}} onClick={handleFacultyClick}>Start Here: Meet The Faculty</Button>
                 </Grid>
             </Grid>
         </Container>

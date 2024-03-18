@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
-import FacultyCard from './FacultyCard';
+import FacultyCard from '../cards/FacultyCard';
 
 function Faculty() {
     const [instructors, setInstructors] = useState([])

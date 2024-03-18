@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Container, FormControl, Typography, Grid, TextField, Box , Button, Divider, getFormLabelUtilityClasses} from '@mui/material';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
+import AuthContext from '../context/AuthProvider';
+
 
 
 function Login() {
+
+    const {setAuth} = useContext(AuthContext)
 
     const handleCreateAccount = (e)=>{
         console.log('new account')
@@ -45,6 +49,28 @@ function Login() {
             .required('Password is required')
     });
 
+    const submitUser = async (values)=>{
+        console.log(values)
+        try {
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(values)
+            })
+            if (res.ok){
+                res.json().then(user=>{
+                    console.log(user)
+                    setAuth(user)
+                })
+            }
+        } catch (error) {
+            console.error(error.message)
+            return error
+        }
+    }
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -54,9 +80,27 @@ function Login() {
         onSubmit: submitUser,
     })
 
-    function submitUser(values){
-        console.log(values)
-    }
+    // const submitUser = async (values)=>{
+    //     console.log(values)
+    //     try {
+    //         const res = await fetch('/api/login', {
+    //             headers: {
+    //                 'Content-type': 'application/json'
+    //             },
+    //             body: JSON.stringify(values)
+    //         })
+    //         if (res.ok){
+    //             res.json().then(user=>{
+    //                 console.log(user)
+    //                 setAuth(user)
+
+    //             })
+    //         }
+    //     } catch (error) {
+    //         console.error(error.message)
+    //         return error
+    //     }
+    // }
     
 
     return (

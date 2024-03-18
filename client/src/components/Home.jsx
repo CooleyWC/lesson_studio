@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { Typography, Container, CardMedia, Grid, Paper, Button } from '@mui/material';
+import { Typography, CardMedia, Grid, Paper, Button, Box } from '@mui/material';
 
 function Home() {
 
@@ -9,7 +9,7 @@ function Home() {
     }
 
     return (
-        <Container sx={{paddingTop: '100px'}}>
+        <Box sx={{paddingTop: '100px'}}>
             <Grid container spacing={{xs: 2, md:3}} columns={{xs:4, sm: 8, md: 12}}>
                 <Grid item xs={12} sm={4}  >
                     <CardMedia
@@ -47,7 +47,7 @@ function Home() {
                     <Button component={Link} to='/faculty' variant='contained' size='large' sx={{backgroundColor: '#415A77', minWidth: '400px'}} onClick={handleFacultyClick}>Start Here: Meet The Faculty</Button>
                 </Grid>
             </Grid>
-        </Container>
+        </Box>
     );
 }
 

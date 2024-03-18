@@ -1,9 +1,9 @@
 import App from './components/App';
-import Home from './components/Home';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import ErrorPage from './components/ErrorPage';
-import Faculty from './components/Faculty';
+import Home from './components/pages/Home';
+import Login from './components/forms/Login';
+import Signup from './components/forms/Signup';
+import ErrorPage from './components/pages/ErrorPage';
+import Faculty from './components/pages/Faculty';
 
 const routes = [
     {

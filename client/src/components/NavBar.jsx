@@ -41,8 +41,20 @@ function NavBar() {
         setAnchorElNav(null)
     }
 
-    const handleLogoutClick = () =>{
-        logout()
+    const handleLogoutClick = async () =>{
+        try{
+            const res = await fetch('/api/logout',{
+                method: 'DELETE',
+            })
+            if (!res.ok){
+                console.error('logout failed')
+            }
+            logout()
+            console.log('successful logout')
+        } catch (error){
+            console.error(error.message)
+            return error
+        }
     }
     
     return (

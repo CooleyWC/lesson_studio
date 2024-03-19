@@ -53,7 +53,6 @@ function Login() {
     });
 
     const submitUser = async (values)=>{
-        console.log(values)
         try {
             const res = await fetch('/api/login', {
                 method: 'POST',
@@ -62,15 +61,17 @@ function Login() {
                 },
                 body: JSON.stringify(values)
             })
-            if (res.ok){
-                res.json().then(user=>{
-                    console.log(user)
-                    login()
-                    navigate('/dashboard')
-                })
+
+            const userData = await res.json()
+            if (!res.ok){
+                console.log('uh oh - login failed', userData.message)
+                return
             }
+            console.log('login success', userData)
+            login()
+            navigate('/dashboard')
         } catch (error) {
-            console.error(error.message)
+            console.error('uh oh', error.message)
             return error
         }
     }

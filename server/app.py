@@ -39,7 +39,7 @@ class CheckSession(Resource):
          user=User.query.filter(User.id==user_id).first()
          return user.to_dict(), 200
       except:
-         error = {'error': 'invalid email or password'}
+         error = {'error': 'error logging in'}
          return error, 401
       
 api.add_resource(CheckSession, '/api/check_session', endpoint='check_session')

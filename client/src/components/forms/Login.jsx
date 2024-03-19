@@ -1,14 +1,17 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { Container, FormControl, Typography, Grid, TextField, Box , Button, Divider, getFormLabelUtilityClasses} from '@mui/material';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
-import AuthContext from '../context/AuthProvider';
+import {useAuth} from '../context/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Login() {
 
-    const {setAuth} = useContext(AuthContext)
+    const {login} = useAuth()
+    // why does this need to be let rather than const
+    let navigate = useNavigate();
 
     const handleCreateAccount = (e)=>{
         console.log('new account')
@@ -62,7 +65,8 @@ function Login() {
             if (res.ok){
                 res.json().then(user=>{
                     console.log(user)
-                    setAuth(user)
+                    login()
+                    navigate('/dashboard')
                 })
             }
         } catch (error) {
@@ -79,28 +83,6 @@ function Login() {
         validationSchema: loginSchema,
         onSubmit: submitUser,
     })
-
-    // const submitUser = async (values)=>{
-    //     console.log(values)
-    //     try {
-    //         const res = await fetch('/api/login', {
-    //             headers: {
-    //                 'Content-type': 'application/json'
-    //             },
-    //             body: JSON.stringify(values)
-    //         })
-    //         if (res.ok){
-    //             res.json().then(user=>{
-    //                 console.log(user)
-    //                 setAuth(user)
-
-    //             })
-    //         }
-    //     } catch (error) {
-    //         console.error(error.message)
-    //         return error
-    //     }
-    // }
     
 
     return (

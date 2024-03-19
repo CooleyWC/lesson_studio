@@ -4,6 +4,7 @@ import Login from './components/forms/Login';
 import Signup from './components/forms/Signup';
 import ErrorPage from './components/pages/ErrorPage';
 import Faculty from './components/pages/Faculty';
+import Dashboard from './components/pages/Dashboard';
 
 const routes = [
     {
@@ -27,6 +28,10 @@ const routes = [
             {
                 path: '/signup',
                 element: <Signup />,
+            },
+            {
+                path: '/dashboard',
+                element: <Dashboard />,
             }
         ],  
     },

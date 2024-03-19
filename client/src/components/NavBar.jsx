@@ -1,25 +1,36 @@
 import {Link, NavLink} from 'react-router-dom';
 import {AppBar, Container, Typography, Toolbar, IconButton, Button, Box, Menu, MenuItem} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useAuth } from './context/AuthProvider';
 
 import React from 'react';
 
-const pages = [
+const isUser = [
     {
-        page: 'Home',
-        route: '/',
+        page: 'Faculty',
+        route: '/faculty',
     },
+    {
+        page: 'Dashboard',
+        route: '/dashboard'
+    }
+]
+
+const noUser = [
     {
         page: 'Faculty',
         route: '/faculty',
     },
     {
         page: 'Login',
-        route: '/login',
+        route: '/login'
     }
 ]
 
 function NavBar() {
+
+    const {user, login, logout} = useAuth();
+
     const [anchorElNav, setAnchorElNav] = React.useState(null)
 
     const handleOpenNavMenu = (e)=>{
@@ -28,6 +39,10 @@ function NavBar() {
 
     const handleCloseNavMenu = ()=>{
         setAnchorElNav(null)
+    }
+
+    const handleLogoutClick = () =>{
+        logout()
     }
     
     return (
@@ -78,7 +93,8 @@ function NavBar() {
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
-                            {pages.map(({page, route})=>(
+                            {user ? (
+                              isUser.map(({page, route})=>(
                                 <MenuItem
                                     key={page}
                                     component={NavLink}
@@ -87,7 +103,28 @@ function NavBar() {
                                 >
                                     {page}
                                 </MenuItem>
-                            ))}
+                            )))
+                            : (
+                            noUser.map(({page, route})=>(
+                                <MenuItem
+                                    key={page}
+                                    component={NavLink}
+                                    to={route}
+                                    onClick={handleCloseNavMenu}
+                                >
+                                    {page}
+                                </MenuItem>
+                            ))
+                       )}
+                            {user && (
+                            <MenuItem
+                            onClick={handleLogoutClick}
+                            component={NavLink}
+                            to='/'
+                            >
+                            Logout
+                            </MenuItem>
+                            )}
                         </Menu>
                     </Box>
                     {/* small screen */}
@@ -111,23 +148,65 @@ function NavBar() {
                     </Typography>
                     {/* desktop */}
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}, justifyContent: 'flex-end'}}>
-                        {pages.map(({page, route})=>(
+                        {user ? (
+                            isUser.map(({page, route})=>(
+                                <Button
+                                    key={page}
+                                    component={NavLink}
+                                    to={route}
+                                    sx={{my:2, color: 'white', display: 'block',
+                                        '&:hover': {
+                                        backgroundColor: 'white',
+                                        color: 'black'
+                                        }}}
+                                        onClick={handleCloseNavMenu}
+                                >
+                                    <Typography>
+                                        {page}
+                                    </Typography>
+                                </Button>
+                            ))
+                            )
+                            :(
+                            noUser.map(({page, route})=>(
+                                <Button
+                                    key={page}
+                                    component={NavLink}
+                                    to={route}
+                                    sx={{my:2, color: 'white', display: 'block',
+                                        '&:hover': {
+                                        backgroundColor: 'white',
+                                        color: 'black'
+                                        }}}
+                                    onClick={handleCloseNavMenu}
+                                >
+                                    <Typography>
+                                        {page}
+                                    </Typography>
+                                </Button>
+                                )
+                            ))
+                        }
+                        {user && (
                             <Button
-                                key={page}
-                                component={NavLink}
-                                to={route}
-                                sx={{my:2, color: 'white', display: 'block',
-                                '&:hover': {
+                            component={NavLink}
+                            to='/'
+                            sx={{my:2, color: 'white', display: 'block',
+                                    '&:hover': {
                                 backgroundColor: 'white',
                                 color: 'black'
-                            }}}
-                                onClick={handleCloseNavMenu}
-                            >
-                                <Typography>
-                                    {page}
-                                </Typography>
-                            </Button>
-                        ))}
+                                }}}
+                            onClick={()=>{
+                                handleLogoutClick();
+                                handleCloseNavMenu();
+                            }}
+                        >
+                            <Typography>
+                                Logout
+                            </Typography>
+                        </Button>
+                        )}
+                
                     </Box>
                 </Toolbar>
             </Container>

@@ -11,7 +11,7 @@ export const useAuth = ()=>{
 // create a provider component
 export const AuthProvider = ({children}) => {
 
-    const [user, setUser] = useState(false)
+    const [user, setUser] = useState(null)
 
     const login = () => setUser(true)
     const logout = () => setUser(false)

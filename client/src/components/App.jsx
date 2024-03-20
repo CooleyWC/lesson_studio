@@ -17,12 +17,16 @@ function App() {
     fetch('/api/check_session')
     .then(res=>{
       if(res.ok){
+        res.json().then(data=>login(data))
         console.log('youre logged in')
-        login()
+        // login()
       } else {
-        console.log('your not logged in', res.error)
+        console.log('your not logged in')
         logout()
       }
+    })
+    .catch((error)=>{
+      console.log(error)
     })
   }
   

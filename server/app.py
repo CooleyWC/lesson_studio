@@ -34,8 +34,9 @@ api.add_resource(Signup, '/api/signup', endpoint='signup')
 
 class CheckSession(Resource):
    def get(self):
-      user_id=session['user_id']
+      # user_id=session['user_id']
       try:
+         user_id=session['user_id']
          user=User.query.filter(User.id==user_id).first()
          return user.to_dict(), 200
       except:

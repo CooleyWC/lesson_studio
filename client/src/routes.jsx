@@ -20,7 +20,6 @@ const routes = [
                 path: '/faculty',
                 element: <Faculty />,
             },
-            // why do this not need /api in front
             {
                 path: '/login',
                 element: <Login />,

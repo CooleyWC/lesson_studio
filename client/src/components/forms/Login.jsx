@@ -43,7 +43,7 @@ function Login() {
 
     const loginSchema = yup.object({
         email: yup
-            .string('Enter you email')
+            .string('Enter your email')
             .email('Enter a valid email')
             .required('Email is required'),
         password: yup
@@ -68,7 +68,7 @@ function Login() {
                 return
             }
             console.log('login success', userData)
-            login()
+            login(userData)
             navigate('/dashboard')
         } catch (error) {
             console.error('uh oh', error.message)

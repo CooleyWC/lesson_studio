@@ -72,6 +72,20 @@ class Logout(Resource):
       
 api.add_resource(Logout, '/api/logout', endpoint='logout')
 
+class LessonByID(Resource):
+   def get(self, id):
+      try: 
+         lesson = Lesson.query.filter(Lesson.id == id).first()
+         lesson_dict = lesson.to_dict()
+
+         return lesson_dict, 200
+      except:
+         error={'error': 'problem getting the lesson'}
+         return error, 400
+   
+api.add_resource(LessonByID, '/api/lesson_by_id/<int:id>')
+
+
 class Instructors(Resource):
     def get(self):
         instructors = [instructor.to_dict() for instructor in Instructor.query.all()]

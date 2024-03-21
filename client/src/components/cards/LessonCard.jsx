@@ -3,7 +3,7 @@ import {Typography, Paper, Button, Box} from '@mui/material'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
-function LessonCard({instructorId, date, rating}) {
+function LessonCard({instructor, date, rating}) {
 
 
     const [thumbUp, setThumbUp] = useState(rating)
@@ -28,7 +28,7 @@ function LessonCard({instructorId, date, rating}) {
                 <Typography>{dateAndtime} <Button>Edit</Button> </Typography>
             </Box>
             <Box>
-                <Typography>{instructorId}</Typography>
+                <Typography>{instructor}</Typography>
             </Box>
             <Box>
                 {thumbUp ? (

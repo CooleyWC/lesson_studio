@@ -9,7 +9,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash','-lessons.user', '-lessons.instructor', '-instructors.lessons', '-instructors.users', '-lessons.user_id',)
+    serialize_rules = ('-_password_hash','-lessons.user', '-instructors.lessons', '-instructors.users', '-lessons.user_id', '-lessons.instructor.experience', '-lessons.instructor.photo', '-lessons.instructor.bio', '-lessons.instructor.email', '-lessons.instructor_id')
 
     id=db.Column(db.Integer, primary_key=True)
     username=db.Column(db.String, unique=True, nullable=False)

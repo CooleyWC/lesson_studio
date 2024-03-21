@@ -42,7 +42,7 @@ function Dashboard() {
             <Stack spacing={2} key={lesson.id}>
                 <LessonCard 
                     key={lesson.id}
-                    instructorId={lesson.instructor_id}
+                    instructor={lesson.instructor.name}
                     date={lesson.date_time}
                     rating={lesson.user_rating.toString()}
                 />

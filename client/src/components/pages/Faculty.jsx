@@ -20,9 +20,9 @@ function Faculty() {
     console.log(instructors)
 
     const facultyCards = 
-        <Grid container spacing={1}>
+        <Grid container spacing={5}>
             {instructors.map((instructor)=>(
-                <Grid item key={instructor.id} xs={12} sm={6} md={4}>
+                <Grid item key={instructor.id} xs={12} sm={6} md={3} lg={3}>
                     <FacultyCard
                         key={instructor.id}
                         name={instructor.name}
@@ -37,7 +37,7 @@ function Faculty() {
     
     return (
         <>
-            <Box sx={{paddingTop: '50px', backgroundColor: '#E0E1DD', width: '100%', margin: 0}}>
+            <Box sx={{paddingTop: '50px', backgroundColor: '#E0E1DD', width: '100%', marginBottom: '20px'}}>
                 <Typography variant='h2' sx={{color: 'black', fontSize: '80px', fontWeight: 'light', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     Faculty
                 </Typography>

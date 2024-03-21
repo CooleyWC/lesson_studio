@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
-import { Typography, Box, Grid, Card } from '@mui/material';
+import React from 'react';
+import { Typography, Box, Grid, Card, Stack } from '@mui/material';
 import { useAuth } from '../context/AuthProvider';
 import ProfileCard from '../cards/ProfileCard';
 import InstructorCardDash from '../cards/InstructorCardDash';
-import { useEffect } from 'react';
+import LessonCard from '../cards/LessonCard';
+
 
 function Dashboard() {
 
@@ -20,21 +21,34 @@ function Dashboard() {
         }
 
     const instructors = user.instructors
-    console.log(instructors)
+    console.log(user.lessons)
     const instructorsMap = instructors.map((instructor)=>{
         return (
         <Grid item xs={12} md={4} lg={4} key={instructor.id}>
-        <InstructorCardDash 
-            key={instructor.id}
-            name={instructor.name}
-            instrument={instructor.instrument}
-            photo={instructor.photo}
-            email={instructor.email}
-        />
+            <InstructorCardDash 
+                key={instructor.id}
+                name={instructor.name}
+                instrument={instructor.instrument}
+                photo={instructor.photo}
+                email={instructor.email}
+            />
         </Grid>
         )
-        
     })
+
+    const lessons = user.lessons
+    const lessonsMap = lessons.map((lesson)=>{
+        return (
+            <Stack spacing={2} key={lesson.id}>
+                <LessonCard 
+                    key={lesson.id}
+                    instructorId={lesson.instructor_id}
+                    date={lesson.date_time}
+                    rating={lesson.user_rating.toString()}
+                />
+            </Stack>
+        )
+    }) 
 
     return (
         <>
@@ -45,13 +59,13 @@ function Dashboard() {
         </Box>
         <Box sx={{marginBottom: '20px'}}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={4} md={4} lg={2}>
+            <Grid item xs={12} sm={4} md={4} lg={3}>
                 <Card sx={{marginTop: '10px', marginBottom: '10px', minWidth: '50px'}}>
                     <Typography sx={{paddingLeft: '20px', fontSize: '30px'}}>Your Profile</Typography>
                 </Card>
                 <ProfileCard name={user.username} age={user.age} primary_instrument={user.primary_instrument}/>
             </Grid>
-            <Grid item xs={12} sm={8} md={8} lg={10}>
+            <Grid item xs={12} sm={8} md={8} lg={9}>
                 <Card sx={{marginTop: '10px', marginBottom: '10px', minWidth: '50px'}}>
                     <Typography sx={{paddingLeft: '20px', fontSize: '30px'}}>Your Instructors</Typography>
                 </Card>
@@ -63,6 +77,7 @@ function Dashboard() {
             <Card sx={{marginTop: '10px', marginBottom: '10px', minWidth: '50px'}}>
                 <Typography sx={{paddingLeft: '20px', fontSize: '30px'}}>Your Lessons</Typography>
             </Card>
+            {lessonsMap}
         </Box>
         </>
     );

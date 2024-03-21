@@ -6,11 +6,11 @@ function FacultyCard({name, instrument, bio, photo}) {
     
 
     return (
-        <Card sx={{width: '350px', height: 'auto', margin: 0, padding: 0}}>
+        <Card sx={{maxWidth: '350px', minHeight: '650px', maxHeight: '700px', margin: 0, padding: 0}}>
             <CardMedia
                 component='img'
                 image={photo}
-                sx={{maxHeight: '350px'}}
+                sx={{height: '300px'}}
             />         
             <CardContent>
                 <Typography variant='h3'>
@@ -24,7 +24,7 @@ function FacultyCard({name, instrument, bio, photo}) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button>Schedule A Lesson</Button>
+                <Button>Add Instructor</Button>
             </CardActions>
         </Card>
     );

@@ -3,7 +3,7 @@ import {Typography, Paper, Button, Box} from '@mui/material'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
-function LessonCard({instructor, date, rating}) {
+function LessonCard({instructor, date, rating, lessonInstrument}) {
 
 
     const [thumbUp, setThumbUp] = useState(rating)
@@ -23,17 +23,23 @@ function LessonCard({instructor, date, rating}) {
 
 
     return (
-        <Paper sx={{width: '100%', display: 'flex', justifyContent: 'space-evenly'}}>
+        <Paper sx={{height: '50px', paddingTop: '20px', width: '100%', display: 'flex', justifyContent: 'space-around'}}>
             <Box>
-                <Typography>{dateAndtime} <Button>Edit</Button> </Typography>
+                <Typography sx={{alignSelf: 'flex-start', paddingRight: '100px', paddingLeft: '20px'}}>{dateAndtime}</Typography>
             </Box>
             <Box>
-                <Typography>{instructor}</Typography>
+                <Typography sx={{paddingRight: '100px'}}>{instructor}</Typography>
+            </Box>
+            <Box>
+                <Typography sx={{paddingRight: '100px'}}>{lessonInstrument}</Typography>
             </Box>
             <Box>
                 {thumbUp ? (
                     <ThumbUpAltIcon sx={{color: 'blue'}} onClick={()=>setThumbUp(false)}/>
                 ): (<ThumbUpOffAltIcon onClick={()=>setThumbUp('true')}/>)}
+            </Box>
+            <Box>
+                <Button variant='outlined' color='error' >Cancel</Button>
             </Box>
         </Paper>
     );

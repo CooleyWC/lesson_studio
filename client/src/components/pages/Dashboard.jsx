@@ -43,6 +43,7 @@ function Dashboard() {
                 <LessonCard 
                     key={lesson.id}
                     instructor={lesson.instructor.name}
+                    lessonInstrument={lesson.instructor.instrument}
                     date={lesson.date_time}
                     rating={lesson.user_rating.toString()}
                 />

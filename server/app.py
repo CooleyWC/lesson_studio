@@ -1,6 +1,7 @@
 from config import app, api, db
 from flask_restful import Resource
 from flask import request, session
+from datetime import datetime
 
 from models import Instructor, User, Lesson
 
@@ -82,6 +83,64 @@ class LessonByID(Resource):
       except:
          error={'error': 'problem getting the lesson'}
          return error, 400
+      
+   def patch(self, id):
+      data = request.get_json()
+      if data:
+         try:
+            lesson = Lesson.query.filter(Lesson.id == id).first()
+
+            for attr in data:
+               
+               if attr == 'date_time':
+           
+                  date_str = data.get(attr)
+                  print(date_str)
+                  # this works but need to convert the string to integers separated by commas
+                  # currently hardcoded to the date below as a placeholder
+                  date_int = datetime(2024,4,1,10,10,10)
+
+                  print(date_int)
+
+                  try:
+                     print(f'trying to set: {date_int}')
+                     setattr(lesson, attr, date_int)
+                  except:
+                     error = {"error": "incorrect date format"}
+               else:
+
+                  setattr(lesson, attr, data.get(attr))
+
+            db.session.add(lesson)
+            db.session.commit()
+
+            lesson_dict = lesson.to_dict()
+
+            return lesson_dict, 200  
+      
+         except:
+            error = {'error': 'there was a problem updating this lesson'}
+            return error, 422
+      else:
+         error = {'error': 'there was a problem updating this lesson'}
+         return error, 422
+      
+   def delete(self, id):
+      try:
+         lesson = Lesson.query.filter(Lesson.id == id).first()
+         print(lesson)
+
+         db.session.delete(lesson)
+         db.session.commit()
+
+
+         return {"message": "the lesson was successfully deleted"}, 200
+      
+      except:
+         error = {"error": "there was a problem deleting the lesson"}
+         return error, 422
+      
+         
    
 api.add_resource(LessonByID, '/api/lesson_by_id/<int:id>')
 

@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Typography, Paper, Button, Box} from '@mui/material'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
-function LessonCard({instructor, date, rating, lessonInstrument}) {
+function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lessonId}) {
 
 
     const [thumbUp, setThumbUp] = useState(rating)
@@ -21,6 +21,14 @@ function LessonCard({instructor, date, rating, lessonInstrument}) {
     }
     const dateAndtime = dateFormat + ' ' + hour + minutes + ' ' + ampm
 
+    useEffect(()=>{
+        if(rating === false){
+            setThumbUp(false)
+        } else{
+            setThumbUp(true)
+        }
+    }, [rating])
+
 
     return (
         <Paper sx={{height: '50px', paddingTop: '20px', width: '100%', display: 'flex', justifyContent: 'space-around'}}>
@@ -35,8 +43,14 @@ function LessonCard({instructor, date, rating, lessonInstrument}) {
             </Box>
             <Box>
                 {thumbUp ? (
-                    <ThumbUpAltIcon sx={{color: 'blue'}} onClick={()=>setThumbUp(false)}/>
-                ): (<ThumbUpOffAltIcon onClick={()=>setThumbUp('true')}/>)}
+                    <ThumbUpAltIcon sx={{color: 'blue'}} onClick={()=>{
+                        onUpdate(lessonId,false)
+                        setThumbUp(false)
+                    }}/>
+                ): (<ThumbUpOffAltIcon onClick={()=>{
+                    onUpdate(lessonId, true)
+                    setThumbUp(true)
+                    }}/>)}
             </Box>
             <Box>
                 <Button variant='outlined' color='error' >Cancel</Button>

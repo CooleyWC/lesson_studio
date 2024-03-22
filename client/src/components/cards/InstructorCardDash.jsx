@@ -3,7 +3,7 @@ import {Card, CardContent, CardMedia, Typography} from '@mui/material'
 
 function InstructorCardDash({name, instrument, photo, email}) {
     return (
-        <Card sx={{maxWidth: '200px', maxHeight: 'auto'}}>
+        <Card sx={{maxWidth: '250px', maxHeight: 'auto'}}>
             <CardMedia component='img'src={photo} sx={{maxHeight: '250px'}}/>
             <CardContent>
                 <Typography>{name}</Typography>

@@ -15,9 +15,13 @@ export const AuthProvider = ({children}) => {
 
     const login = (data) => setUser(data)
     const logout = () => setUser(null)
+    const update = async (data) => {
+        setUser(data)
+        console.log('after update', user)
+    }
 
     return (
-        <AuthContext.Provider value={{user, login, logout}}>
+        <AuthContext.Provider value={{user, setUser, update, login, logout}}>
             {children}
         </AuthContext.Provider>
     )

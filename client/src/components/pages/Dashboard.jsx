@@ -4,24 +4,50 @@ import { useAuth } from '../context/AuthProvider';
 import ProfileCard from '../cards/ProfileCard';
 import InstructorCardDash from '../cards/InstructorCardDash';
 import LessonCard from '../cards/LessonCard';
+import { useEffect } from 'react';
 
 
 function Dashboard() {
 
-    const {user} = useAuth()
+    const {user, update} = useAuth()
+
+    if(user===null || !user){
+        return <p>loading</p>
+    }
+
+    const handleLessonUpdate = (id, selection)=>{
    
-
-    if(user === null) return <Typography sx={{color: 'white', fontSize: '50px', paddingTop: '100px'}}>Loading....</Typography>
-
-    if(!user) {
-    
-        return (
-            <Typography sx={{color: 'white', fontSize: '40px', paddingTop: '80px'}}>Hi! Please login to view dashboard</Typography>
-        )
+        // console.log(id)
+        let userRating = null
+        if(selection===true){
+            userRating = true
+        } else if(selection===false){
+            userRating = false
         }
+
+        fetch(`/api/lesson_by_id/${id}`,{
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({user_rating:userRating}),
+        })
+        .then((res)=>{
+            if(res.ok){
+                res.json().then(data=>{
+                    console.log('response successful', data)
+                    update(data)
+                })
+            } else {
+                res.json().then(error=>console.log(error))
+            }
+        })
+    }
+
 
     const instructors = user.instructors
     console.log(user.lessons)
+
     const instructorsMap = instructors.map((instructor)=>{
         return (
         <Grid item xs={12} md={4} lg={4} key={instructor.id}>
@@ -42,14 +68,18 @@ function Dashboard() {
             <Stack spacing={2} key={lesson.id}>
                 <LessonCard 
                     key={lesson.id}
+                    lessonId={lesson.id}
                     instructor={lesson.instructor.name}
                     lessonInstrument={lesson.instructor.instrument}
                     date={lesson.date_time}
                     rating={lesson.user_rating.toString()}
+                    onUpdate={handleLessonUpdate}
                 />
             </Stack>
         )
     }) 
+
+
 
     return (
         <>

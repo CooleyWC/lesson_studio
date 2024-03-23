@@ -4,46 +4,38 @@ import { useAuth } from '../context/AuthProvider';
 import ProfileCard from '../cards/ProfileCard';
 import InstructorCardDash from '../cards/InstructorCardDash';
 import LessonCard from '../cards/LessonCard';
-import { useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 
 function Dashboard() {
 
-    const {user, update} = useAuth()
+    const {user} = useAuth()
+    const {handleLikeUpdate} = useOutletContext();
 
     if(user===null || !user){
         return <p>loading</p>
     }
 
-    const handleLessonUpdate = (id, selection)=>{
-   
-        // console.log(id)
-        let userRating = null
-        if(selection===true){
-            userRating = true
-        } else if(selection===false){
-            userRating = false
-        }
+    const handleLessonUpdate = (id, newRating)=>{
 
         fetch(`/api/lesson_by_id/${id}`,{
             method: "PATCH",
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({user_rating:userRating}),
+            body: JSON.stringify({user_rating:newRating}),
         })
         .then((res)=>{
             if(res.ok){
-                res.json().then(data=>{
-                    console.log('response successful', data)
-                    update(data)
+                res.json().then(updatedLesson=>{
+                    console.log('response successful', updatedLesson)
+                    handleLikeUpdate(updatedLesson)
                 })
             } else {
                 res.json().then(error=>console.log(error))
             }
         })
     }
-
 
     const instructors = user.instructors
     console.log(user.lessons)
@@ -72,14 +64,13 @@ function Dashboard() {
                     instructor={lesson.instructor.name}
                     lessonInstrument={lesson.instructor.instrument}
                     date={lesson.date_time}
-                    rating={lesson.user_rating.toString()}
+                    rating={lesson.user_rating}
                     onUpdate={handleLessonUpdate}
+                    userObj={user}
                 />
             </Stack>
         )
     }) 
-
-
 
     return (
         <>

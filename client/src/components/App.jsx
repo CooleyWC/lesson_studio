@@ -6,7 +6,7 @@ import { useAuth } from './context/AuthProvider';
 
 function App() {
 
-  const {user, login, logout} = useAuth()
+  const {user, login, logout, update} = useAuth()
 
 
   useEffect(()=>{
@@ -19,7 +19,6 @@ function App() {
       if(res.ok){
         res.json().then(data=>login(data))
         console.log('youre logged in')
-        // login()
       } else {
         console.log('your not logged in')
         logout()
@@ -29,12 +28,34 @@ function App() {
       console.log(error)
     })
   }
+
+  
+
+  const handleLikeUpdate = (updatedLesson)=>{
+    // console.log('HEY!', updatedLesson)
+
+    const userLessons = user.lessons
+
+    const updatedLessons = userLessons.map((lesson)=>{
+      if(lesson.id === updatedLesson.id){
+        return updatedLesson
+      } else {
+        return lesson
+      }
+    })
+
+    const updatedUser = {...user, lessons:updatedLessons}
+    update(updatedUser)
+    // console.log('updated-lessons', updatedUser.lessons)
+
+
+  }
   
 
   return (
     <Container>
       <Header />
-      <Outlet />
+      <Outlet context={{handleLikeUpdate}}/>
     </Container>
   )
 }

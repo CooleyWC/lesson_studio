@@ -3,11 +3,7 @@ import {Typography, Paper, Button, Box} from '@mui/material'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
-function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lessonId}) {
-
-
-    const [thumbUp, setThumbUp] = useState(rating)
-
+function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lessonId, userObj}) {
 
     const jsDate = new Date(date)
     const dateFormat = jsDate.toLocaleDateString()
@@ -20,14 +16,6 @@ function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lesso
         ampm = 'PM'
     }
     const dateAndtime = dateFormat + ' ' + hour + minutes + ' ' + ampm
-
-    useEffect(()=>{
-        if(rating === false){
-            setThumbUp(false)
-        } else{
-            setThumbUp(true)
-        }
-    }, [rating])
 
 
     return (
@@ -42,14 +30,12 @@ function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lesso
                 <Typography sx={{paddingRight: '100px'}}>{lessonInstrument}</Typography>
             </Box>
             <Box>
-                {thumbUp ? (
+                {rating ? (
                     <ThumbUpAltIcon sx={{color: 'blue'}} onClick={()=>{
-                        onUpdate(lessonId,false)
-                        setThumbUp(false)
+                        onUpdate(lessonId, false)
                     }}/>
                 ): (<ThumbUpOffAltIcon onClick={()=>{
                     onUpdate(lessonId, true)
-                    setThumbUp(true)
                     }}/>)}
             </Box>
             <Box>

@@ -14,7 +14,7 @@ function Login() {
     let navigate = useNavigate();
 
     const handleCreateAccount = (e)=>{
-        console.log('new account')
+        navigate('/signup')
     }
 
     const containerStyle = {

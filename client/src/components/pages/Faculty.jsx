@@ -3,8 +3,11 @@ import { Box, Typography, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import FacultyCard from '../cards/FacultyCard';
 import FilterCard from '../cards/FilterCard';
+import { useOutletContext } from 'react-router-dom';
 
 function Faculty() {
+    const {handleAddFaculty} = useOutletContext()
+
     const [instructors, setInstructors] = useState([])
     const [nameSearch, setNameSearch] = useState('')
     const [instrumentSearch, setInstrumentSearch] = useState('all')
@@ -19,6 +22,14 @@ function Faculty() {
         })
         .catch(error=>console.log(error))
     }, [])
+
+
+    const onAddFaculty = async (selection)=>{
+        console.log('faculty selected', selection)
+
+        // need to make a new route, patch, send to handle add faculty function in app
+
+    }
 
 
     const handleInstrumentSearch = (e) =>{
@@ -58,11 +69,13 @@ function Faculty() {
             {filteredNames.map((instructor)=>(
                 <Grid item key={instructor.id} xs={12} sm={6} md={3} lg={3}>
                     <FacultyCard
+                        instructorObj={instructor}
                         key={instructor.id}
                         name={instructor.name}
                         instrument={instructor.instrument}
                         bio={instructor.bio}
                         photo={instructor.photo}
+                        onAddFaculty={onAddFaculty}
                     />
                 </Grid>
             ))}

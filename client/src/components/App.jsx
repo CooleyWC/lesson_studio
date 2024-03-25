@@ -29,10 +29,18 @@ function App() {
     })
   }
 
+  const handleAddFaculty = (instructor)=>{
+    if(!user){
+      console.log('yo - log in first')
+      return
+    }
+    
+    // const updatedInstructors = 
+
+  }
   
 
   const handleLikeUpdate = (updatedLesson)=>{
-    // console.log('HEY!', updatedLesson)
 
     const userLessons = user.lessons
 
@@ -46,16 +54,14 @@ function App() {
 
     const updatedUser = {...user, lessons:updatedLessons}
     update(updatedUser)
-    // console.log('updated-lessons', updatedUser.lessons)
-
-
+ 
   }
   
 
   return (
     <Container>
       <Header />
-      <Outlet context={{handleLikeUpdate}}/>
+      <Outlet context={{handleLikeUpdate, handleAddFaculty}}/>
     </Container>
   )
 }

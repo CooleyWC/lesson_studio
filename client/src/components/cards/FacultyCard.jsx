@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, Typography, CardMedia, CardActions, Button } from '@mui/material';
 
-function FacultyCard({name, instrument, bio, photo}) {
+function FacultyCard({name, instrument, bio, photo, instructorObj, onAddFaculty}) {
 
     
 
@@ -24,7 +24,7 @@ function FacultyCard({name, instrument, bio, photo}) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button>Add Instructor</Button>
+                <Button onClick={()=>onAddFaculty(instructorObj)}>Add Instructor</Button>
             </CardActions>
         </Card>
     );

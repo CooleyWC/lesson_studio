@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, InputLabel, Select, Paper, TextField, MenuItem, FormControl} from '@mui/material';
 
-function FilterCard({handleNameSearch, nameSearch, handleInstrumentSearch, instrumentSearch}) {
+function Filter({handleNameSearch, nameSearch, handleInstrumentSearch, instrumentSearch}) {
 
     const VALID_INSTRUMENTS = [
         'all',
@@ -52,4 +52,4 @@ function FilterCard({handleNameSearch, nameSearch, handleInstrumentSearch, instr
     );
 }
 
-export default FilterCard;
+export default Filter;

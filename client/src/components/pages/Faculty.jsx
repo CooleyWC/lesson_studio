@@ -7,7 +7,7 @@ import FilterCard from '../cards/FilterCard';
 function Faculty() {
     const [instructors, setInstructors] = useState([])
     const [nameSearch, setNameSearch] = useState('')
-    const [instrumentSearch, setInstrumentSearch] = useState([])
+    const [instrumentSearch, setInstrumentSearch] = useState('all')
 
 
     useEffect(()=>{
@@ -20,7 +20,21 @@ function Faculty() {
         .catch(error=>console.log(error))
     }, [])
 
-    // console.log(instructors)
+
+    const handleInstrumentSearch = (e) =>{
+        console.log(e.target.value)
+        setInstrumentSearch(e.target.value)
+    }
+
+    const filteredInstrumentSearch = instructors.filter((instructor)=>{
+        if(instrumentSearch==='all'){
+            return instructor
+        }
+        if(instructor.instrument===instrumentSearch){
+            return instructor
+        }
+    })
+
 
     const handleNameSearch = (e) =>{
         console.log(e.target.value)
@@ -28,26 +42,16 @@ function Faculty() {
     }
 
 
-    const filteredNames = instructors.filter((instructor)=>{
+    const filteredNames = filteredInstrumentSearch.filter((instructor)=>{
         
         if(nameSearch===''){
-            return true
+            return instructor
         }
     
         if(instructor.name.toLowerCase().includes(nameSearch.toLowerCase())){
-            return true
+            return instructor
         } 
     })
-
-    console.log(nameSearch)
-    console.log(filteredNames)
-    
-    const handleInstrumentSearch = (e) =>{
-        console.log(e.target.value)
-        setInstrumentSearch(e.target.value)
-    }
-
-
 
     const facultyCards = 
         <Grid container spacing={5}>

@@ -32,7 +32,7 @@ function FilterCard({handleNameSearch, nameSearch, handleInstrumentSearch, instr
                     label='Search By Instrument'
                     onChange={handleInstrumentSearch} 
                     value={instrumentSearch} 
-                    multiple
+                    // multiple
                     sx={{width: '200px'}}
                     >
                     {VALID_INSTRUMENTS.map((instrument)=>{

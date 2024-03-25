@@ -30,10 +30,10 @@ function App() {
   }
 
   const handleAddFaculty = (instructor)=>{
-    if(!user){
-      console.log('yo - log in first')
-      return
-    }
+    // if(!user){
+    //   console.log('yo - log in first')
+    //   return
+    // }
     
     // const updatedInstructors = 
 

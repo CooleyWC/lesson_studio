@@ -5,6 +5,7 @@ import ProfileCard from '../cards/ProfileCard';
 import InstructorCardDash from '../cards/InstructorCardDash';
 import LessonCard from '../cards/LessonCard';
 import { useOutletContext } from 'react-router-dom';
+import AddLesson from '../forms/AddLesson';
 
 
 function Dashboard() {
@@ -38,7 +39,7 @@ function Dashboard() {
     }
 
     const instructors = user.instructors
-    console.log(user.lessons)
+    // console.log(user.lessons)
 
     const instructorsMap = instructors.map((instructor)=>{
         return (
@@ -94,6 +95,9 @@ function Dashboard() {
                 {instructorsMap}
             </Grid>
           </Grid>
+        </Box>
+        <Box>
+            <AddLesson />
         </Box>
         <Box sx={{backgroundColor: '#E0E1DD', width: '100%', borderRadius: '5px'}}>
             <Card sx={{marginTop: '10px', marginBottom: '10px', minWidth: '50px'}}>

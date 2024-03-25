@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import FacultyCard from '../cards/FacultyCard';
-import FilterCard from '../cards/FilterCard';
+import Filter from '../forms/Filter';
 import { useOutletContext } from 'react-router-dom';
 
 function Faculty() {
@@ -90,7 +90,7 @@ function Faculty() {
                 </Typography>
             </Box>
             <Box>
-                <FilterCard 
+                <Filter 
                     handleNameSearch={handleNameSearch}
                     nameSearch={nameSearch}
                     handleInstrumentSearch={handleInstrumentSearch}

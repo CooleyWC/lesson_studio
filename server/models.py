@@ -59,6 +59,7 @@ class User(db.Model, SerializerMixin):
     
     @validates('primary_instrument')
     def validate_primary_instrument(self, key, primary_instrument):
+        # fix all the spellings
         VALID_INSTUMENTS = ['piano', 'drums', 'bass', 'guitar', 'trumpet','trombone', 'tuba', 'french horn', 'cello', 'violin', 'viola', 'voice']
 
         if not any(instrument in primary_instrument for instrument in VALID_INSTUMENTS):

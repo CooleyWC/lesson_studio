@@ -18,9 +18,9 @@ function App() {
     .then(res=>{
       if(res.ok){
         res.json().then(data=>login(data))
-        console.log('youre logged in')
+        // console.log('youre logged in')
       } else {
-        console.log('your not logged in')
+        // console.log('your not logged in')
         logout()
       }
     })

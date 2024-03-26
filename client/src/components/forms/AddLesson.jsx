@@ -12,7 +12,7 @@ function AddLesson() {
     const [dateValue, setDateValue] = useState(null)
     const [timeValue, setTimeValue] = useState(null)
     // console.log('date', dateValue.$d)
-    console.log('time', timeValue)
+
 
     return (
         <Paper sx={{backgroundColor: 'white', height: '80px', paddingTop: '15px', paddingBottom: '15px', width: '100%'}}>

@@ -96,15 +96,18 @@ class LessonByID(Resource):
            
                   date_str = data.get(attr)
                   print(date_str)
-                  # this works but need to convert the string to integers separated by commas
-                  # currently hardcoded to the date below as a placeholder
-                  date_int = datetime(2024,4,1,10,10,10)
+                  print('')
+                  print('')
 
-                  print(date_int)
+                  format = '%Y,%m,%d,%H,%M,%S'
+                  print(f'format: {format}')
+
+                  datetime_str = datetime.strptime(date_str, format)
+                  # to reverse, do (Pdb) datetime_str.strftime("%A %B %d %Y")
+                  # output = 'Monday April 01 2024'
 
                   try:
-                     print(f'trying to set: {date_int}')
-                     setattr(lesson, attr, date_int)
+                     setattr(lesson, attr, datetime_str)
                   except:
                      error = {"error": "incorrect date format"}
                else:
@@ -143,6 +146,50 @@ class LessonByID(Resource):
          
    
 api.add_resource(LessonByID, '/api/lesson_by_id/<int:id>')
+
+class UserByID(Resource):
+   def get(self, id):
+      try:
+         user = User.query.filter(User.id == id).first()
+         user_dict = user.to_dict()
+
+         return user_dict, 200
+      
+      except:
+         error = {"error": "no user found"}
+         return error, 400
+      
+   def patch(self, id):
+      try:
+         data = request.get_json()
+
+         user = User.query.filter(User.id == id).first()
+
+         for attr in data:
+            if attr == 'instructors':
+               instructors_list = data.get(attr)
+               try:
+                  print(f'original attribute: {user.instructors}')
+                  print(f'new instructor list {instructors_list}')
+                  setattr(user, attr, instructors_list)
+                  
+               except:
+                  error = {"error": "there was an error updating the instructors attribute"}
+                  return error
+            else:
+               setattr(user, attr, data.get(attr))
+         
+         db.session.commit()
+
+         user_dict = user.to_dict()
+
+         return user_dict, 200
+
+      except:
+         error = {"error": "there was an error updating the instructors attribute"}
+         return error, 422
+
+api.add_resource(UserByID, '/api/user_by_id/<int:id>')
 
 
 class Instructors(Resource):

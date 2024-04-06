@@ -11,7 +11,7 @@ import AddLesson from '../forms/AddLesson';
 function Dashboard() {
 
     const {user} = useAuth()
-    const {handleLikeUpdate} = useOutletContext();
+    const {handleLikeUpdate, allInstructors} = useOutletContext();
 
     if(user===null || !user){
         return <p>loading</p>
@@ -37,6 +37,29 @@ function Dashboard() {
             }
         })
     }
+
+    const handleScheduleLesson = (obj)=>{
+        console.log(obj)
+
+        // fetch goes here
+        fetch('/api/add_lesson', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(obj)
+        })
+        .then((res)=>{
+            if(res.ok){
+                res.json().then(lesson=>{
+                    console.log('added lesson: ', lesson)
+                })
+            } else {
+                res.json().then(error=>console.log(error))
+            }
+        })
+    }
+
 
     const instructors = user.instructors
     // console.log(user.lessons)
@@ -97,7 +120,11 @@ function Dashboard() {
           </Grid>
         </Box>
         <Box>
-            <AddLesson />
+            <AddLesson 
+                allInstructors={allInstructors}
+                user={user}
+                handleScheduleLesson={handleScheduleLesson}
+            />
         </Box>
         <Box sx={{backgroundColor: '#E0E1DD', width: '100%', borderRadius: '5px'}}>
             <Card sx={{marginTop: '10px', marginBottom: '10px', minWidth: '50px'}}>

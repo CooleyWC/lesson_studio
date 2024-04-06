@@ -191,6 +191,59 @@ class UserByID(Resource):
 
 api.add_resource(UserByID, '/api/user_by_id/<int:id>')
 
+class AddLesson(Resource):
+   def post(self):
+      data=request.get_json()
+      
+
+      if data:
+         try:
+            for attr in data:
+               if attr == 'date_time':
+                  print(f"data from front end: {data.get(attr)}")
+                  
+                  date_str = data.get(attr).replace("T", "-").replace(",","").replace("Z", "").split("-")
+             
+                  year = date_str[0]
+                  month = date_str[1]
+                  day = date_str[2]
+                  time = date_str[3].split(":")
+                  seconds_data = time[2].split(".")
+         
+                  hour = time[0]
+                  minutes = time[1]
+                  seconds = seconds_data[0]
+  
+                  date_str = f'{year},{month},{day},{hour},{minutes},{seconds}'
+         
+                  format = '%Y,%m,%d,%H,%M,%S'
+
+                  datetime_str = datetime.strptime(date_str, format)
+            
+                  lesson = Lesson(
+                     user_id = data.get('user_id'),
+                     instructor_id = data.get('instructor_id'),
+                     user_rating = data.get('user_rating'),
+                     date_time = datetime_str,
+                  )
+            
+                  db.session.add(lesson)
+                  db.session.commit()
+            
+                  lesson_dict = lesson.to_dict()
+
+                  return lesson_dict, 200
+         except:
+            error = {"error": "uh oh"}
+            return error, 422
+      else:
+         print('oh no')
+      
+
+
+api.add_resource(AddLesson, '/api/add_lesson')
+
+
 
 class Instructors(Resource):
     def get(self):

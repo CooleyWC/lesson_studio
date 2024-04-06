@@ -7,6 +7,8 @@ import { useAuth } from './context/AuthProvider';
 function App() {
 
   const {user, login, logout, update} = useAuth()
+  const [userInstructors, setUserInstructors] = useState([])
+  const [allInstructors, setAllInstructors] = useState([])
 
 
   useEffect(()=>{
@@ -29,7 +31,21 @@ function App() {
     })
   }
 
-  const handleAddFaculty = (instructor)=>{
+  useEffect(()=>{
+    fetch('/api/instructors')
+    .then(res=>res.json())
+    .then(instructorsData=>{
+        setAllInstructors(instructorsData)
+        // is this a good way to do this?
+        if(user){
+            setUserInstructors(user.instructors)
+        }
+     
+    })
+    .catch(error=>console.log(error))
+}, [])
+
+  // const handleAddFaculty = (instructor)=>{
     // if(!user){
     //   console.log('yo - log in first')
     //   return
@@ -37,7 +53,7 @@ function App() {
     
     // const updatedInstructors = 
 
-  }
+  // }
   
 
   const handleLikeUpdate = (updatedLesson)=>{
@@ -61,7 +77,7 @@ function App() {
   return (
     <Container>
       <Header />
-      <Outlet context={{handleLikeUpdate, handleAddFaculty}}/>
+      <Outlet context={{handleLikeUpdate, userInstructors, setUserInstructors, allInstructors, setAllInstructors}}/>
     </Container>
   )
 }

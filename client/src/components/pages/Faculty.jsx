@@ -9,38 +9,39 @@ import {useAuth} from '../context/AuthProvider';
 function Faculty() {
 
     const {user} = useAuth();
-    const {handleAddFaculty} = useOutletContext()
+    const {allInstructors, setInstructors, userInstructors, setUserInstructors} = useOutletContext()
+    
 
-    const [instructors, setInstructors] = useState([])
+    // const [instructors, setInstructors] = useState([])
     const [nameSearch, setNameSearch] = useState('')
     const [instrumentSearch, setInstrumentSearch] = useState('all')
 
-    const [userInstructors, setUserInstructors] = useState([])
+    // const [userInstructors, setUserInstructors] = useState([])
 
     
     
 
-    useEffect(()=>{
-        fetch('/api/instructors')
-        .then(res=>res.json())
-        .then(instructorsData=>{
-            setInstructors(instructorsData)
-            // is this a good way to do this?
-            if(user){
-                setUserInstructors(user.instructors)
-            }
+    // useEffect(()=>{
+    //     fetch('/api/instructors')
+    //     .then(res=>res.json())
+    //     .then(instructorsData=>{
+    //         setInstructors(instructorsData)
+    //         // is this a good way to do this?
+    //         if(user){
+    //             setUserInstructors(user.instructors)
+    //         }
          
-        })
-        .catch(error=>console.log(error))
-    }, [])
+    //     })
+    //     .catch(error=>console.log(error))
+    // }, [])
 
 
 
-    const onAddFaculty = async (instructorSelect)=>{
-        console.log('faculty selected', instructorSelect)
-        console.log('users instructors', user.instructors)
+    // const onAddFaculty = async (instructorSelect)=>{
+    //     console.log('faculty selected', instructorSelect)
+    //     console.log('users instructors', user.instructors)
 
-        setUserInstructors([...userInstructors, instructorSelect])
+    //     setUserInstructors([...userInstructors, instructorSelect])
 
         //send the userInstructors array to the backend
         //fetch to user by id
@@ -48,15 +49,16 @@ function Faculty() {
         //write the patch and set the instructors attribute to userInstructors
         //return the user
 
-    }
+    // }
 
     console.log(userInstructors)
+    
     const handleInstrumentSearch = (e) =>{
         console.log(e.target.value)
         setInstrumentSearch(e.target.value)
     }
 
-    const filteredInstrumentSearch = instructors.filter((instructor)=>{
+    const filteredInstrumentSearch = allInstructors.filter((instructor)=>{
         if(instrumentSearch==='all'){
             return instructor
         }
@@ -94,7 +96,7 @@ function Faculty() {
                         instrument={instructor.instrument}
                         bio={instructor.bio}
                         photo={instructor.photo}
-                        onAddFaculty={onAddFaculty}
+                        // onAddFaculty={onAddFaculty}
                     />
                 </Grid>
             ))}

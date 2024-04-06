@@ -66,7 +66,7 @@ function Dashboard() {
 
     const instructorsMap = instructors.map((instructor)=>{
         return (
-        <Grid item xs={12} md={4} lg={4} key={instructor.id}>
+        <Grid item xs={12} md={4} lg={4} key={instructor.id} >
             <InstructorCardDash 
                 key={instructor.id}
                 name={instructor.name}

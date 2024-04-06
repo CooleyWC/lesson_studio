@@ -4,18 +4,16 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
 function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lessonId, userObj}) {
+    // console.log(date)
+
 
     const jsDate = new Date(date)
-    const dateFormat = jsDate.toLocaleDateString()
-    const hour = jsDate.getHours().toString() + ':'
-    const minutes = jsDate.getMinutes().toString()
-    let ampm = ''
-    if(hour <= '12'){
-        ampm = 'AM'
-    } else {
-        ampm = 'PM'
-    }
-    const dateAndtime = dateFormat + ' ' + hour + minutes + ' ' + ampm
+    const dateFormat = jsDate.toDateString()
+    const formattedDate = jsDate.toLocaleString()
+    const timeFormat = formattedDate.split(',')
+
+
+    const dateAndtime = dateFormat + " " + timeFormat[1]
 
 
     return (

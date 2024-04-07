@@ -39,9 +39,6 @@ function Dashboard() {
     }
 
     const handleScheduleLesson = (obj)=>{
-        console.log(obj)
-
-        // fetch goes here
         fetch('/api/add_lesson', {
             method: "POST",
             headers: {
@@ -51,6 +48,7 @@ function Dashboard() {
         })
         .then((res)=>{
             if(res.ok){
+                console.log(`response: ${res}`)
                 res.json().then(lesson=>{
                     console.log('added lesson: ', lesson)
                 })
@@ -60,9 +58,7 @@ function Dashboard() {
         })
     }
 
-
     const instructors = user.instructors
-    // console.log(user.lessons)
 
     const instructorsMap = instructors.map((instructor)=>{
         return (

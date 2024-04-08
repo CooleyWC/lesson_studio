@@ -41,7 +41,6 @@ function App() {
   
 
   const handleLikeUpdate = (updatedLesson)=>{
-
     const userLessons = user.lessons
 
     const updatedLessons = userLessons.map((lesson)=>{
@@ -54,14 +53,17 @@ function App() {
 
     const updatedUser = {...user, lessons:updatedLessons}
     update(updatedUser)
- 
+  }
+
+  const handleAddLesson = (newLesson)=>{
+    update(prevUserData=>({
+      ...prevUserData, lessons: [...prevUserData.lessons, newLesson]}))
   }
   
-
   return (
     <Container>
       <Header />
-      <Outlet context={{handleLikeUpdate, allInstructors}}/>
+      <Outlet context={{handleLikeUpdate, allInstructors, handleAddLesson}}/>
     </Container>
   )
 }

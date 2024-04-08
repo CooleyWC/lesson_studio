@@ -11,7 +11,7 @@ import AddLesson from '../forms/AddLesson';
 function Dashboard() {
 
     const {user} = useAuth()
-    const {handleLikeUpdate, allInstructors} = useOutletContext();
+    const {handleLikeUpdate, allInstructors, handleAddLesson} = useOutletContext();
 
     if(user===null || !user){
         return <p>loading</p>
@@ -51,6 +51,7 @@ function Dashboard() {
                 console.log(`response: ${res}`)
                 res.json().then(lesson=>{
                     console.log('added lesson: ', lesson)
+                    handleAddLesson(lesson)
                 })
             } else {
                 res.json().then(error=>console.log(error))

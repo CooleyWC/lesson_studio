@@ -3,7 +3,7 @@ import {Typography, Paper, Button, Box} from '@mui/material'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
-function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lessonId, userObj}) {
+function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lessonId, onDeleteLesson}) {
     // console.log(date)
 
 
@@ -37,7 +37,7 @@ function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lesso
                     }}/>)}
             </Box>
             <Box>
-                <Button variant='outlined' color='error' >Cancel</Button>
+                <Button variant='outlined' color='error' onClick={()=>{onDeleteLesson(lessonId)}}>Cancel</Button>
             </Box>
         </Paper>
     );

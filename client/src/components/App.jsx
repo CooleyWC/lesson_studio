@@ -39,7 +39,6 @@ function App() {
     .catch(error=>console.log(error))
 }, [])
   
-
   const handleLikeUpdate = (updatedLesson)=>{
     const userLessons = user.lessons
 
@@ -59,6 +58,8 @@ function App() {
     update(prevUserData=>({
       ...prevUserData, lessons: [...prevUserData.lessons, newLesson]}))
   }
+
+  
   
   return (
     <Container>

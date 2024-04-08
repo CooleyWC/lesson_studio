@@ -38,6 +38,18 @@ function Dashboard() {
         })
     }
 
+    const handleDelete = (id)=>{
+        fetch(`/api/lesson_by_id/${id}`,{
+            method: "DELETE"
+        })
+        .then((res)=>{
+            if(res.ok){
+                handleLessonDelete(id)
+                console.log(`lesson: ${id} was deleted successfully`)
+            }
+        })
+    }
+
     const handleScheduleLesson = (obj)=>{
         fetch('/api/add_lesson', {
             method: "POST",
@@ -59,6 +71,8 @@ function Dashboard() {
         })
     }
 
+    // the instructors should update after a lesson is added
+    // currently they only update after a refresh
     const instructors = user.instructors
 
     const instructorsMap = instructors.map((instructor)=>{
@@ -75,7 +89,16 @@ function Dashboard() {
         )
     })
 
-    const lessons = user.lessons
+    // should this be state? does not re-render after the delete
+    let lessons = user.lessons
+
+    const handleLessonDelete = (id)=>{
+        const lessonsAfterDelete = lessons.filter((lesson)=>{
+            lesson.id !== id
+        })
+        lessons = lessonsAfterDelete
+    }
+
     const lessonsMap = lessons.map((lesson)=>{
         return (
             <Stack spacing={2} key={lesson.id}>
@@ -87,6 +110,7 @@ function Dashboard() {
                     date={lesson.date_time}
                     rating={lesson.user_rating}
                     onUpdate={handleLessonUpdate}
+                    onDeleteLesson={handleDelete}
                     userObj={user}
                 />
             </Stack>

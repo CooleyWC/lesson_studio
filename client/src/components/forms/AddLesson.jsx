@@ -18,6 +18,7 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
         setInstructorSelect(e.target.value)
     }
 
+    // need to add formik to this form
     const handleLessonSubmit = (e)=>{
         e.preventDefault()
 

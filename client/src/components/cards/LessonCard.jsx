@@ -17,7 +17,7 @@ function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lesso
 
 
     return (
-        <Paper sx={{height: '50px', paddingTop: '20px', width: '100%', display: 'flex', justifyContent: 'space-around'}}>
+        <Paper sx={{backgroundColor: '#81c3d7', height: '50px', paddingTop: '20px', width: '100%', display: 'flex', justifyContent: 'space-around'}}>
             <Box>
                 <Typography sx={{alignSelf: 'flex-start', paddingRight: '100px', paddingLeft: '20px'}}>{dateAndtime}</Typography>
             </Box>

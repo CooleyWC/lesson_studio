@@ -101,7 +101,7 @@ function Dashboard() {
 
     const lessonsMap = lessons.map((lesson)=>{
         return (
-            <Stack spacing={2} key={lesson.id}>
+            // <Stack key={lesson.id}>
                 <LessonCard 
                     key={lesson.id}
                     lessonId={lesson.id}
@@ -113,7 +113,7 @@ function Dashboard() {
                     onDeleteLesson={handleDelete}
                     userObj={user}
                 />
-            </Stack>
+            // </Stack>
         )
     }) 
 
@@ -149,11 +149,13 @@ function Dashboard() {
                 handleScheduleLesson={handleScheduleLesson}
             />
         </Box>
-        <Box sx={{backgroundColor: '#E0E1DD', width: '100%', borderRadius: '5px'}}>
+        <Box sx={{backgroundColor: '#0D1B2A', width: '100%', borderRadius: '5px'}}>
             <Card sx={{marginTop: '10px', marginBottom: '10px', minWidth: '50px'}}>
                 <Typography sx={{paddingLeft: '20px', fontSize: '30px'}}>Your Lessons</Typography>
             </Card>
+            <Stack spacing={1}>
             {lessonsMap}
+            </Stack>
         </Box>
         </>
     );

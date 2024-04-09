@@ -63,7 +63,6 @@ function Faculty() {
             ))}
         </Grid>
  
-    
     return (
         <>
             <Box sx={{paddingTop: '50px', backgroundColor: '#E0E1DD', width: '100%', marginBottom: '20px'}}>

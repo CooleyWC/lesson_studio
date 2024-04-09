@@ -77,7 +77,7 @@ function Dashboard() {
 
     const instructorsMap = instructors.map((instructor)=>{
         return (
-        <Grid item xs={12} md={4} lg={4} key={instructor.id} >
+        <Grid item key={instructor.id} >
             <InstructorCardDash 
                 key={instructor.id}
                 name={instructor.name}
@@ -136,7 +136,9 @@ function Dashboard() {
                 <Card sx={{marginTop: '10px', marginBottom: '10px', minWidth: '50px'}}>
                     <Typography sx={{paddingLeft: '20px', fontSize: '30px'}}>Your Instructors</Typography>
                 </Card>
+                <Grid container item spacing={2} sx={{display: 'flex', justifyContent: 'start', alignItems: 'flex-start'}}>
                 {instructorsMap}
+                </Grid>
             </Grid>
           </Grid>
         </Box>

@@ -12,14 +12,18 @@ function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lesso
     const formattedDate = jsDate.toLocaleString()
     const timeFormat = formattedDate.split(',')
 
+    const time = timeFormat[1].split(' ')
+    const timeSplit = time[1].split(':')
+    const timeToDisplay = timeSplit[0] + ':' + timeSplit[1] + time[2]
 
-    const dateAndtime = dateFormat + " " + timeFormat[1]
+    const dateAndTime = dateFormat + " " + timeToDisplay
+
 
 
     return (
         <Paper sx={{backgroundColor: '#81c3d7', height: '50px', paddingTop: '20px', width: '100%', display: 'flex', justifyContent: 'space-around'}}>
             <Box>
-                <Typography sx={{alignSelf: 'flex-start', paddingRight: '100px', paddingLeft: '20px'}}>{dateAndtime}</Typography>
+                <Typography sx={{alignSelf: 'flex-start', paddingRight: '100px', paddingLeft: '20px'}}>{dateAndTime}</Typography>
             </Box>
             <Box>
                 <Typography sx={{paddingRight: '100px'}}>{instructor}</Typography>

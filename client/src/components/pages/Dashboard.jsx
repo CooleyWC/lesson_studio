@@ -63,7 +63,8 @@ function Dashboard() {
                 console.log(`response: ${res}`)
                 res.json().then(lesson=>{
                     console.log('added lesson: ', lesson)
-                    handleAddLesson(lesson)
+                    const instructorsOnDash = user.instructors
+                    handleAddLesson(lesson, instructorsOnDash)
                 })
             } else {
                 res.json().then(error=>console.log(error))

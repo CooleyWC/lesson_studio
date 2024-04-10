@@ -5,7 +5,10 @@ import * as yup from 'yup';
 import {useAuth} from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
-
+// for instructor login:
+// add button to a new route
+// in the backend create a instructor signin and login route
+// create an instructor Dashboard
 
 function Login() {
 

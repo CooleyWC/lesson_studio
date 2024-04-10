@@ -1,4 +1,4 @@
-import {Container, Typography} from '@mui/material'
+import {Container} from '@mui/material'
 import Header from './Header';
 import {Outlet} from 'react-router-dom';
 import { useEffect, useState} from 'react';
@@ -54,9 +54,23 @@ function App() {
     update(updatedUser)
   }
 
-  const handleAddLesson = (newLesson)=>{
-    update(prevUserData=>({
-      ...prevUserData, lessons: [...prevUserData.lessons, newLesson]}))
+  const handleAddLesson = (newLesson, instructorsOnDash)=>{
+
+    const updateInstructors = instructorsOnDash.find((instructor)=>{
+      return instructor.id ===newLesson.instructor_id
+    })
+
+    if(!updateInstructors){
+      update(prevUserData=>({
+        ...prevUserData, lessons: [...prevUserData.lessons, newLesson], instructors: [...prevUserData.instructors, newLesson.instructor]}))
+    } else {
+      update(prevUserData=>({
+        ...prevUserData, lessons: [...prevUserData.lessons, newLesson]}))
+    }
+
+
+    // update(prevUserData=>({
+    //   ...prevUserData, lessons: [...prevUserData.lessons, newLesson]}))
   }
 
   

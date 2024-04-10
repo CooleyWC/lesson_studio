@@ -1,14 +1,13 @@
 import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import FacultyCard from '../cards/FacultyCard';
 import Filter from '../forms/Filter';
 import { useOutletContext } from 'react-router-dom';
-import {useAuth} from '../context/AuthProvider';
+
 
 function Faculty() {
 
-    const {user} = useAuth();
     const {allInstructors} = useOutletContext()
     
     const [nameSearch, setNameSearch] = useState('')
@@ -70,7 +69,7 @@ function Faculty() {
                     Faculty
                 </Typography>
             </Box>
-            <Box>
+            <Box sx={{marginBottom: '20px'}}>
                 <Filter 
                     handleNameSearch={handleNameSearch}
                     nameSearch={nameSearch}

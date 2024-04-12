@@ -11,11 +11,13 @@ import AddLesson from '../forms/AddLesson';
 function Dashboard() {
 
     const {user} = useAuth()
-    const {handleLikeUpdate, allInstructors, handleAddLesson} = useOutletContext();
+    const {handleLikeUpdate, allInstructors, handleAddLesson, handleLessonDelete} = useOutletContext();
 
     if(user===null || !user){
         return <p>loading</p>
     }
+
+    const instructorsOnDash = user.instructors
 
     const handleLessonUpdate = (id, newRating)=>{
 
@@ -44,7 +46,7 @@ function Dashboard() {
         })
         .then((res)=>{
             if(res.ok){
-                handleLessonDelete(id)
+                handleLessonDelete(id, instructorsOnDash)
                 console.log(`lesson: ${id} was deleted successfully`)
             }
         })
@@ -63,7 +65,7 @@ function Dashboard() {
                 console.log(`response: ${res}`)
                 res.json().then(lesson=>{
                     console.log('added lesson: ', lesson)
-                    const instructorsOnDash = user.instructors
+                    // const instructorsOnDash = user.instructors
                     handleAddLesson(lesson, instructorsOnDash)
                 })
             } else {
@@ -72,8 +74,6 @@ function Dashboard() {
         })
     }
 
-    // the instructors should update after a lesson is added
-    // currently they only update after a refresh
     const instructors = user.instructors
 
     const instructorsMap = instructors.map((instructor)=>{
@@ -93,12 +93,12 @@ function Dashboard() {
     // should this be state? does not re-render after the delete
     let lessons = user.lessons
 
-    const handleLessonDelete = (id)=>{
-        const lessonsAfterDelete = lessons.filter((lesson)=>{
-            lesson.id !== id
-        })
-        lessons = lessonsAfterDelete
-    }
+    // const handleLessonDelete = (id)=>{
+    //     const lessonsAfterDelete = lessons.filter((lesson)=>{
+    //         lesson.id !== id
+    //     })
+    //     lessons = lessonsAfterDelete
+    // }
 
     const lessonsMap = lessons.map((lesson)=>{
         return (

@@ -14,6 +14,8 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
     const [timeValue, setTimeValue] = useState(null)
     const [instructorSelect, setInstructorSelect] = useState('')
 
+    console.log(timeValue)
+
     const handleInstructorSelect = (e)=>{
         setInstructorSelect(e.target.value)
     }

@@ -9,7 +9,6 @@ function App() {
   const {user, login, logout, update} = useAuth()
   const [allInstructors, setAllInstructors] = useState([])
 
-
   useEffect(()=>{
     checkUser()
   }, [])
@@ -19,9 +18,7 @@ function App() {
     .then(res=>{
       if(res.ok){
         res.json().then(data=>login(data))
-        // console.log('youre logged in')
       } else {
-        // console.log('your not logged in')
         logout()
       }
     })
@@ -71,9 +68,6 @@ function App() {
 
   const handleLessonDelete = (id, instructorsOnDash)=>{
     const usersLessons = user.lessons
-    const userInstructors = [...user.instructors]
-    // console.log(userInstructors)
-
     const lessonsAfterDelete = usersLessons.filter((lesson)=>{
       return lesson.id !== id
     })
@@ -82,23 +76,15 @@ function App() {
       return lesson.instructor
     })
 
-    // console.log(instructorsOnDash[0].id)
-    console.log(postDeleteInstructors)
-
     const instructorsPostDelete = []
     for(let i=0; i<instructorsOnDash.length; i++){
-
-      // console.log(postDeleteInstructors[i].id)
-      // console.log(instructorsOnDash[i].id)
       if(postDeleteInstructors[i] && instructorsOnDash[i] && instructorsOnDash[i].id === postDeleteInstructors[i].id){
         instructorsPostDelete.push(instructorsOnDash[i])
         console.log(postDeleteInstructors[i].id, instructorsOnDash[i].id)
       } else {
-        console.log('yo')
+        console.log('instructors updated')
       }
     }
-
-
 
     update(prevUserData=>({
       ...prevUserData, lessons: [...lessonsAfterDelete], instructors: [...instructorsPostDelete]

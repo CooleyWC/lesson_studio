@@ -57,7 +57,7 @@ function App() {
   const handleAddLesson = (newLesson, instructorsOnDash)=>{
 
     const updateInstructors = instructorsOnDash.find((instructor)=>{
-      return instructor.id ===newLesson.instructor_id
+      return instructor.id===newLesson.instructor_id
     })
 
     if(!updateInstructors){
@@ -67,18 +67,49 @@ function App() {
       update(prevUserData=>({
         ...prevUserData, lessons: [...prevUserData.lessons, newLesson]}))
     }
-
-
-    // update(prevUserData=>({
-    //   ...prevUserData, lessons: [...prevUserData.lessons, newLesson]}))
   }
 
-  
+  const handleLessonDelete = (id, instructorsOnDash)=>{
+    const usersLessons = user.lessons
+    const userInstructors = [...user.instructors]
+    // console.log(userInstructors)
+
+    const lessonsAfterDelete = usersLessons.filter((lesson)=>{
+      return lesson.id !== id
+    })
+
+    const postDeleteInstructors = lessonsAfterDelete.map((lesson)=>{
+      return lesson.instructor
+    })
+
+    // console.log(instructorsOnDash[0].id)
+    console.log(postDeleteInstructors)
+
+    const instructorsPostDelete = []
+    for(let i=0; i<instructorsOnDash.length; i++){
+
+      // console.log(postDeleteInstructors[i].id)
+      // console.log(instructorsOnDash[i].id)
+      if(postDeleteInstructors[i] && instructorsOnDash[i] && instructorsOnDash[i].id === postDeleteInstructors[i].id){
+        instructorsPostDelete.push(instructorsOnDash[i])
+        console.log(postDeleteInstructors[i].id, instructorsOnDash[i].id)
+      } else {
+        console.log('yo')
+      }
+    }
+
+
+
+    update(prevUserData=>({
+      ...prevUserData, lessons: [...lessonsAfterDelete], instructors: [...instructorsPostDelete]
+    }))
+
+}
   
   return (
     <Container>
       <Header />
-      <Outlet context={{handleLikeUpdate, allInstructors, handleAddLesson}}/>
+      <Outlet context={{handleLikeUpdate, allInstructors, handleAddLesson, handleLessonDelete}}/>
     </Container>
   )
 }

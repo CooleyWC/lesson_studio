@@ -70,7 +70,7 @@ function Login() {
                 console.log('uh oh - login failed', userData.message)
                 return
             }
-            console.log('login success', userData)
+            // console.log('login success', userData)
             login(userData)
             navigate('/dashboard')
         } catch (error) {

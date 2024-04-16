@@ -13,6 +13,10 @@ const isUser = [
     {
         page: 'Dashboard',
         route: '/dashboard'
+    },
+    {
+        page: 'Instructor',
+        route: '/instructor',
     }
 ]
 

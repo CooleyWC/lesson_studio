@@ -239,11 +239,34 @@ class AddLesson(Resource):
       else:
          print('oh no')
       
-
-
 api.add_resource(AddLesson, '/api/add_lesson')
 
+class CreateInstructor(Resource):
+   def post(self):
+      json=request.get_json()
 
+      try: 
+         instructor = Instructor(
+            name=json.get('name'),
+            email=json.get('email'),
+            bio=json.get('bio'),
+            experience=json.get('experience'),
+            instrument=json.get('instrument'),
+            photo=json.get('photo')
+         )
+
+         db.session.add(instructor)
+         db.session.commit()
+
+         instructor_dict = instructor.to_dict()
+
+         return instructor_dict, 201
+
+      except:
+         error={'error': 'invalid input'}
+         return error, 422
+
+api.add_resource(CreateInstructor, '/api/create_instructor', endpoint='create_instructor')
 
 class Instructors(Resource):
     def get(self):

@@ -81,6 +81,7 @@ class Instructor(db.Model, SerializerMixin):
     bio=db.Column(db.String, nullable=False)
     experience=db.Column(db.Integer, nullable=False, default=0)
     instrument=db.Column(db.String, nullable=False)
+    # validate photo?
     photo=db.Column(db.String)
 
     lessons = db.relationship('Lesson', back_populates='instructor', cascade='all, delete-orphan')

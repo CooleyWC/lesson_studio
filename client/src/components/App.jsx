@@ -89,13 +89,17 @@ function App() {
     update(prevUserData=>({
       ...prevUserData, lessons: [...lessonsAfterDelete], instructors: [...instructorsPostDelete]
     }))
+  }
 
-}
+  const handleAddInstructor = (newTeacher)=>{
+    console.log(newTeacher)
+    setAllInstructors([...allInstructors, newTeacher])
+  }
   
   return (
     <Container>
       <Header />
-      <Outlet context={{handleLikeUpdate, allInstructors, handleAddLesson, handleLessonDelete}}/>
+      <Outlet context={{handleLikeUpdate, allInstructors, handleAddLesson, handleLessonDelete, handleAddInstructor}}/>
     </Container>
   )
 }

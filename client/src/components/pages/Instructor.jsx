@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Box, Stack, Grid, Container, FormControl, TextField, Button, Divider, InputLabel, Select, OutlinedInput, MenuItem, Typography} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 
@@ -20,6 +20,8 @@ const VALID_INSTRUMENTS = [
 ]
 
 function Instructor() {
+
+    const {handleAddInstructor} = useOutletContext()
 
     const [newInstructors, setNewInstructors] = useState([])
 
@@ -93,6 +95,7 @@ function Instructor() {
                 return
             }
             console.log('instructor successfully created', instructorData)
+            handleAddInstructor(instructorData)
             setNewInstructors([...newInstructors, instructorData])
         } catch (error) {
             console.error('uh oh', error.message)

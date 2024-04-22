@@ -1,28 +1,24 @@
-import React, {useState} from 'react';
-import {Paper, Box, FormControl, Select, InputLabel, MenuItem, Button, OutlinedInput, getFormLabelUtilityClasses} from '@mui/material'
+import React from 'react';
+import {Paper, Box, FormControl, Select, InputLabel, MenuItem, Button} from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
-import {useFormik, Form} from 'formik';
+import {useFormik} from 'formik';
 import * as yup from 'yup';
-// import { FORMAT_SECONDS_NO_LEADING_ZEROS } from '@mui/x-date-pickers/internals/hooks/useField/useField.utils';
-
 
 function AddLesson({allInstructors, user, handleScheduleLesson}) {
 
     const instructorIDs = allInstructors.map(instructor=>instructor.id)
 
     const submitLesson = (values)=>{
-        
         const lessonObj = {
             user_rating: false,
             user_id: user.id,
             date_time: values.time.$d,
             instructor_id: values.instructor_id
         }
-
         console.log(lessonObj)
         handleScheduleLesson(lessonObj)
     }
@@ -30,10 +26,10 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
     const lessonSchema = yup.object().shape({
         date: yup
             .date()
-            .nullable(),
+            .required('Required'),
         time: yup
-            .date()
-            .nullable(),
+            .date('must have a time')
+            .required('Required'),
         instructor_id: yup
             .number()
             .oneOf(instructorIDs)
@@ -47,11 +43,12 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
             date: null,
             time: null,
             instructor_id: "",
-   
         },
         validationSchema: lessonSchema,
         onSubmit: submitLesson,
     })
+
+    console.log(formik)
 
     return (
         <Paper sx={{backgroundColor: 'white', height: '80px', paddingTop: '15px', paddingBottom: '15px', width: '100%'}}>
@@ -63,7 +60,9 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
                     <DatePicker 
                         label='Select Date'
                         value={formik.values.date}
+                        // onChange={formik.handleChange}
                         onChange={value=>formik.setFieldValue("date", value)}
+                        error={formik.touched.date && Boolean(formik.errors.date)}
                         sx={{paddingRight: '10px'}}
                     />
                 </FormControl>
@@ -71,8 +70,10 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
                     <TimePicker
                         label='Select Time'
                         value={formik.values.time}
+                        // onChange={formik.handleChange}
                         onChange={value=>formik.setFieldValue("time", value)}
                         referenceDate={dayjs(formik.values.date)}
+                        error={formik.touched.time && Boolean(formik.errors.time)}
                         sx={{paddingRight: '10px'}}
                     />
                 </FormControl>
@@ -85,6 +86,7 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
                     onChange={formik.handleChange}
                     value={formik.values.instructor_id}
                     name="instructor_id"
+                    error={formik.touched.instructor_id && Boolean(formik.errors.instructor_id)}
                     sx={{width: '200px'}}
                     >
                     {allInstructors.map((instructor)=>{

@@ -5,15 +5,10 @@ import * as yup from 'yup';
 import {useAuth} from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
-// for instructor login:
-// add button to a new route
-// in the backend create a instructor signin and login route
-// create an instructor Dashboard
 
 function Login() {
 
     const {login} = useAuth()
-    // why does this need to be let rather than const
     let navigate = useNavigate();
 
     const handleCreateAccount = (e)=>{
@@ -64,17 +59,15 @@ function Login() {
                 },
                 body: JSON.stringify(values)
             })
-
             const userData = await res.json()
             if (!res.ok){
                 console.log('uh oh - login failed', userData.message)
                 return
             }
-            // console.log('login success', userData)
             login(userData)
             navigate('/dashboard')
         } catch (error) {
-            console.error('uh oh', error.message)
+            console.error('error logging in: ', error.message)
             return error
         }
     }

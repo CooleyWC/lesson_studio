@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import {useAuth} from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
-
 const VALID_INSTRUMENTS = [
     'piano', 
     'drums', 
@@ -23,10 +22,9 @@ const VALID_INSTRUMENTS = [
 
 function Signup() {
     const {login} = useAuth()
-    // why does this need to be let rather than const
     let navigate = useNavigate();
 
-    const handleLogin = (e)=>{
+    const handleLogin = ()=>{
         navigate('/login')
     }
 

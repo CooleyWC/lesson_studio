@@ -87,14 +87,14 @@ function Signup() {
 
             const userData = await res.json()
             if (!res.ok){
-                console.log('uh oh - signup failed', userData.message)
+                console.log('error - signup failed', userData.message)
                 return
             }
             console.log('signup success', userData)
             login(userData)
             navigate('/dashboard')
         } catch (error) {
-            console.error('uh oh', error.message)
+            console.error('error', error.message)
             return error
         }
     }

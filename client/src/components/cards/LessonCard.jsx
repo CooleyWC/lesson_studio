@@ -4,10 +4,10 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
 function LessonCard({instructor, date, rating, lessonInstrument, onUpdate, lessonId, onDeleteLesson}) {
-    // console.log(date)
+    const dateStr = date + ' ' + 'UTC'
 
-
-    const jsDate = new Date(date)
+    // console.log(dateStr)
+    const jsDate = new Date(dateStr)
     const dateFormat = jsDate.toDateString()
     const formattedDate = jsDate.toLocaleString()
     const timeFormat = formattedDate.split(',')

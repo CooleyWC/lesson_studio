@@ -2,6 +2,7 @@ from config import app, api, db
 from flask_restful import Resource
 from flask import request, session
 from datetime import datetime
+from dateutil import parser
 
 from models import Instructor, User, Lesson
 
@@ -201,24 +202,27 @@ class AddLesson(Resource):
             for attr in data:
                if attr == 'date_time':
                   print(f"data from front end: {data.get(attr)}")
-                  
-                  date_str = data.get(attr).replace("T", "-").replace(",","").replace("Z", "").split("-")
-             
-                  year = date_str[0]
-                  month = date_str[1]
-                  day = date_str[2]
-                  time = date_str[3].split(":")
-                  seconds_data = time[2].split(".")
-         
-                  hour = time[0]
-                  minutes = time[1]
-                  seconds = seconds_data[0]
-  
-                  date_str = f'{year},{month},{day},{hour},{minutes},{seconds}'
-         
-                  format = '%Y,%m,%d,%H,%M,%S'
+                  datetime_str = parser.parse(data.get(attr))
 
-                  datetime_str = datetime.strptime(date_str, format)
+                  # breakpoint()
+                  # date_str = data.get(attr).replace("T", "-").replace(",","").replace("Z", "").split("-")
+                  
+                  # year = date_str[0]
+                  # month = date_str[1]
+                  # day = date_str[2]
+                  # time = date_str[3].split(":")
+                  # seconds_data = time[2].split(".")
+         
+                  # hour = time[0]
+                  # minutes = time[1]
+                  # seconds = seconds_data[0]
+  
+                  # date_str = f'{year},{month},{day},{hour},{minutes},{seconds}'
+         
+                  # format = '%Y,%m,%d,%H,%M,%S'
+                  # # breakpoint()
+                  # datetime_str = datetime.strptime(date_str, format).replace(tzinfo=datetime.timezone.utc)
+                  # breakpoint()
             
                   lesson = Lesson(
                      user_id = data.get('user_id'),

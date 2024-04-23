@@ -80,7 +80,7 @@ function App() {
     for(let i=0; i<instructorsOnDash.length; i++){
       if(postDeleteInstructors[i] && instructorsOnDash[i] && instructorsOnDash[i].id === postDeleteInstructors[i].id){
         instructorsPostDelete.push(instructorsOnDash[i])
-        console.log(postDeleteInstructors[i].id, instructorsOnDash[i].id)
+        // console.log(postDeleteInstructors[i].id, instructorsOnDash[i].id)
       } else {
         console.log('instructors updated')
       }

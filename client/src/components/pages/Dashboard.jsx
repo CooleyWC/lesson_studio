@@ -53,6 +53,7 @@ function Dashboard() {
     }
 
     const handleScheduleLesson = (obj)=>{
+        console.log(obj)
         fetch('/api/add_lesson', {
             method: "POST",
             headers: {
@@ -62,10 +63,9 @@ function Dashboard() {
         })
         .then((res)=>{
             if(res.ok){
-                console.log(`response: ${res}`)
+                // console.log(`response: ${res}`)
                 res.json().then(lesson=>{
                     console.log('added lesson: ', lesson)
-                    // const instructorsOnDash = user.instructors
                     handleAddLesson(lesson, instructorsOnDash)
                 })
             } else {

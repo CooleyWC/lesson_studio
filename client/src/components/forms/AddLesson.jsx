@@ -13,13 +13,30 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
     const instructorIDs = allInstructors.map(instructor=>instructor.id)
 
     const submitLesson = (values)=>{
+        // console.log(values.time.toLocaleString())
+        // console.log(values.time.$d.toLocaleDateString())
+        console.log(values.date.$d.getMonth())
+        // console.log(`hours: ${values.time.$d.getHours()}`)
+        // console.log(`hours: ${values.time.$d.getMinutes()}`)
+        // console.log(`hours: ${values.time.$d.getSeconds()}`)
+        const year = values.date.$y
+        const month = values.date.$M
+        const day = values.date.$D
+        const hours = values.time.$d.getHours()
+        const minutes = values.time.$d.getMinutes()
+        const seconds = values.time.$d.getSeconds()
+        const newDate = new Date(year, month, day, hours, minutes, seconds)
+        console.log(newDate)
+
+
         const lessonObj = {
             user_rating: false,
             user_id: user.id,
-            date_time: values.time.$d,
+            date_time: newDate,
+            // date_time: values.time.$d,
             instructor_id: values.instructor_id
         }
-        console.log(lessonObj)
+        // console.log(lessonObj)
         handleScheduleLesson(lessonObj)
     }
 
@@ -48,7 +65,7 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
         onSubmit: submitLesson,
     })
 
-    console.log(formik)
+    // console.log(formik)
 
     return (
         <Paper sx={{backgroundColor: 'white', height: '80px', paddingTop: '15px', paddingBottom: '15px', width: '100%'}}>

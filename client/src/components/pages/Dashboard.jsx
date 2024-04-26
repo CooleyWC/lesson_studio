@@ -63,7 +63,6 @@ function Dashboard() {
         })
         .then((res)=>{
             if(res.ok){
-                // console.log(`response: ${res}`)
                 res.json().then(lesson=>{
                     console.log('added lesson: ', lesson)
                     handleAddLesson(lesson, instructorsOnDash)
@@ -90,31 +89,20 @@ function Dashboard() {
         )
     })
 
-    // should this be state? does not re-render after the delete
     let lessons = user.lessons
-
-    // const handleLessonDelete = (id)=>{
-    //     const lessonsAfterDelete = lessons.filter((lesson)=>{
-    //         lesson.id !== id
-    //     })
-    //     lessons = lessonsAfterDelete
-    // }
 
     const lessonsMap = lessons.map((lesson)=>{
         return (
-            // <Stack key={lesson.id}>
-                <LessonCard 
-                    key={lesson.id}
-                    lessonId={lesson.id}
-                    instructor={lesson.instructor.name}
-                    lessonInstrument={lesson.instructor.instrument}
-                    date={lesson.date_time}
-                    rating={lesson.user_rating}
-                    onUpdate={handleLessonUpdate}
-                    onDeleteLesson={handleDelete}
-                    userObj={user}
-                />
-            // </Stack>
+            <LessonCard 
+                key={lesson.id}
+                lessonId={lesson.id}
+                instructor={lesson.instructor.name}
+                lessonInstrument={lesson.instructor.instrument}
+                date={lesson.date_time}
+                rating={lesson.user_rating}
+                onUpdate={handleLessonUpdate}
+                onDeleteLesson={handleDelete}
+            />
         )
     }) 
 

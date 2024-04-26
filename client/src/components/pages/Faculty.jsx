@@ -13,9 +13,7 @@ function Faculty() {
     const [nameSearch, setNameSearch] = useState('')
     const [instrumentSearch, setInstrumentSearch] = useState('all')
 
-    
     const handleInstrumentSearch = (e) =>{
-        console.log(e.target.value)
         setInstrumentSearch(e.target.value)
     }
 
@@ -28,19 +26,15 @@ function Faculty() {
         }
     })
 
-
     const handleNameSearch = (e) =>{
-        console.log(e.target.value)
         setNameSearch(e.target.value)
     }
-
 
     const filteredNames = filteredInstrumentSearch.filter((instructor)=>{
         
         if(nameSearch===''){
             return instructor
         }
-    
         if(instructor.name.toLowerCase().includes(nameSearch.toLowerCase())){
             return instructor
         } 

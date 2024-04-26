@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Stack, Grid, Container, FormControl, TextField, Button, Divider, InputLabel, Select, OutlinedInput, MenuItem, Typography} from '@mui/material';
+import {Box, Grid, Container, FormControl, TextField, Button, Divider, InputLabel, Select, OutlinedInput, MenuItem, Typography} from '@mui/material';
 import { useOutletContext } from 'react-router-dom';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
@@ -58,7 +58,8 @@ function Instructor() {
         name: yup
             .string('Enter your name')
             .min(3, 'Must be at least 3 characters')
-            .max(30, 'Must be 30 characters or less'),
+            .max(30, 'Must be 30 characters or less')
+            .required('Name is required'),
         email: yup
             .string('Enter your email')
             .email('Enter a valid email')
@@ -66,10 +67,12 @@ function Instructor() {
         bio: yup
             .string('Enter your name')
             .min(10, 'Must be at least 10 characters')
-            .max(250, 'Must be 250 characters or less'),
+            .max(250, 'Must be 250 characters or less')
+            .required('Bio is required'),
         experience: yup
-            .number('Enter your experience level')
-            .min(1, 'Must have at least one year of experience'), 
+            .number('Enter your years of experience')
+            .min(1, 'Must have at least one year of experience')
+            .required('Enter your years of experience'), 
         instrument: yup
             .string('Select an instrument')
             .oneOf(VALID_INSTRUMENTS)
@@ -94,11 +97,10 @@ function Instructor() {
                 console.log('uh oh - create instructor failed', instructorData.message)
                 return
             }
-            console.log('instructor successfully created', instructorData)
             handleAddInstructor(instructorData)
             setNewInstructors([...newInstructors, instructorData])
         } catch (error) {
-            console.error('uh oh', error.message)
+            console.error('Error', error.message)
             return error
         }
     }
@@ -115,6 +117,7 @@ function Instructor() {
         validationSchema: createInstructorSchema,
         onSubmit: submitInstructor,
     })
+    console.log(formik.errors)
     return (
         <Container className='container' sx={containerStyle}>
         <Box sx={boxStyle}>

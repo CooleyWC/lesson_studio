@@ -4,10 +4,6 @@ import { Typography, CardMedia, Grid, Paper, Button, Box } from '@mui/material';
 
 function Home() {
 
-    const handleFacultyClick = (e)=>{
-        console.log(e, 'I was clicked')
-    }
-
     return (
         <Box sx={{paddingTop: '100px'}}>
             <Grid container spacing={{xs: 2, md:3}} columns={{xs:4, sm: 8, md: 12}}>
@@ -44,7 +40,7 @@ function Home() {
             </Grid>
             <Grid container sx={{marginTop: '25px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <Grid item>
-                    <Button component={Link} to='/faculty' variant='contained' size='large' sx={{backgroundColor: '#415A77', minWidth: '400px'}} onClick={handleFacultyClick}>Start Here: Meet The Faculty</Button>
+                    <Button component={Link} to='/faculty' variant='contained' size='large' sx={{backgroundColor: '#415A77', minWidth: '400px'}}>Start Here: Meet The Faculty</Button>
                 </Grid>
             </Grid>
         </Box>

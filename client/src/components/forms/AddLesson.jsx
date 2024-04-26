@@ -15,7 +15,6 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
     const submitLesson = (values)=>{
         // console.log(values.time.toLocaleString())
         // console.log(values.time.$d.toLocaleDateString())
-        console.log(values.date.$d.getMonth())
         // console.log(`hours: ${values.time.$d.getHours()}`)
         // console.log(`hours: ${values.time.$d.getMinutes()}`)
         // console.log(`hours: ${values.time.$d.getSeconds()}`)
@@ -77,7 +76,6 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
                     <DatePicker 
                         label='Select Date'
                         value={formik.values.date}
-                        // onChange={formik.handleChange}
                         onChange={value=>formik.setFieldValue("date", value)}
                         error={formik.touched.date && Boolean(formik.errors.date)}
                         sx={{paddingRight: '10px'}}
@@ -87,7 +85,6 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
                     <TimePicker
                         label='Select Time'
                         value={formik.values.time}
-                        // onChange={formik.handleChange}
                         onChange={value=>formik.setFieldValue("time", value)}
                         referenceDate={dayjs(formik.values.date)}
                         error={formik.touched.time && Boolean(formik.errors.time)}

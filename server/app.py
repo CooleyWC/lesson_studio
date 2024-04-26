@@ -204,7 +204,7 @@ class AddLesson(Resource):
                   print(f"data from front end: {data.get(attr)}")
                   datetime_str = parser.parse(data.get(attr))
 
-                  # breakpoint()
+
                   # date_str = data.get(attr).replace("T", "-").replace(",","").replace("Z", "").split("-")
                   
                   # year = date_str[0]
@@ -220,9 +220,8 @@ class AddLesson(Resource):
                   # date_str = f'{year},{month},{day},{hour},{minutes},{seconds}'
          
                   # format = '%Y,%m,%d,%H,%M,%S'
-                  # # breakpoint()
-                  # datetime_str = datetime.strptime(date_str, format).replace(tzinfo=datetime.timezone.utc)
-                  # breakpoint()
+                  # datetime_str = datetime.strptime(date_str, format)
+
             
                   lesson = Lesson(
                      user_id = data.get('user_id'),
@@ -238,10 +237,10 @@ class AddLesson(Resource):
 
                   return lesson_dict, 200
          except:
-            error = {"error": "uh oh"}
+            error = {"error": "there was an error creating the lesson"}
             return error, 422
       else:
-         print('oh no')
+         print('there was an error creating the lesson')
       
 api.add_resource(AddLesson, '/api/add_lesson')
 

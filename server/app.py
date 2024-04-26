@@ -92,28 +92,7 @@ class LessonByID(Resource):
             lesson = Lesson.query.filter(Lesson.id == id).first()
 
             for attr in data:
-               
-               if attr == 'date_time':
-           
-                  date_str = data.get(attr)
-                  print(date_str)
-                  print('')
-                  print('')
-
-                  format = '%Y,%m,%d,%H,%M,%S'
-                  print(f'format: {format}')
-
-                  datetime_str = datetime.strptime(date_str, format)
-                  # to reverse, do (Pdb) datetime_str.strftime("%A %B %d %Y")
-                  # output = 'Monday April 01 2024'
-
-                  try:
-                     setattr(lesson, attr, datetime_str)
-                  except:
-                     error = {"error": "incorrect date format"}
-               else:
-
-                  setattr(lesson, attr, data.get(attr))
+               setattr(lesson, attr, data.get(attr))
 
             db.session.add(lesson)
             db.session.commit()

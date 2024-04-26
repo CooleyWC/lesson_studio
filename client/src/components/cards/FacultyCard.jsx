@@ -3,8 +3,6 @@ import { Card, CardContent, Typography, CardMedia, CardActions, Button } from '@
 
 function FacultyCard({name, instrument, bio, photo}) {
 
-    
-
     return (
         <Card sx={{maxWidth: '350px', minHeight: '650px', maxHeight: '700px', margin: 0, padding: 0}}>
             <CardMedia
@@ -23,9 +21,6 @@ function FacultyCard({name, instrument, bio, photo}) {
                 {bio}
                 </Typography>
             </CardContent>
-            {/* <CardActions>
-                <Button onClick={()=>onAddFaculty(instructorObj)}>Add Instructor</Button>
-            </CardActions> */}
         </Card>
     );
 }

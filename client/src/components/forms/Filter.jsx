@@ -19,7 +19,6 @@ function Filter({handleNameSearch, nameSearch, handleInstrumentSearch, instrumen
         'voice'
     ]
 
-
     return (
         <Paper sx={{height: '80px', paddingTop: '15px', paddingBottom: '15px', width: '100%', display: 'flex', justifyContent: 'space-around'}}>
             <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -32,7 +31,6 @@ function Filter({handleNameSearch, nameSearch, handleInstrumentSearch, instrumen
                     label='Search By Instrument'
                     onChange={handleInstrumentSearch} 
                     value={instrumentSearch} 
-                    // multiple
                     sx={{width: '200px'}}
                     >
                     {VALID_INSTRUMENTS.map((instrument)=>{

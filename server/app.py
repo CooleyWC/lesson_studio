@@ -1,7 +1,6 @@
 from config import app, api, db
 from flask_restful import Resource
 from flask import request, session
-from datetime import datetime
 from dateutil import parser
 
 from models import Instructor, User, Lesson
@@ -27,7 +26,6 @@ class Signup(Resource):
          session['user_id'] = user.id
 
          return user.to_dict(), 201
-      
       except:
          error={'error': 'invalid input'}
          return error, 422
@@ -36,7 +34,6 @@ api.add_resource(Signup, '/api/signup', endpoint='signup')
 
 class CheckSession(Resource):
    def get(self):
-      # user_id=session['user_id']
       try:
          user_id=session['user_id']
          user=User.query.filter(User.id==user_id).first()
@@ -100,7 +97,6 @@ class LessonByID(Resource):
             lesson_dict = lesson.to_dict()
 
             return lesson_dict, 200  
-      
          except:
             error = {'error': 'there was a problem updating this lesson'}
             return error, 422
@@ -111,97 +107,27 @@ class LessonByID(Resource):
    def delete(self, id):
       try:
          lesson = Lesson.query.filter(Lesson.id == id).first()
-         print(lesson)
 
          db.session.delete(lesson)
          db.session.commit()
 
-
-         return {"message": "the lesson was successfully deleted"}, 200
-      
+         return {"message": "the lesson was successfully deleted"}, 200      
       except:
          error = {"error": "there was a problem deleting the lesson"}
          return error, 422
       
-         
-   
 api.add_resource(LessonByID, '/api/lesson_by_id/<int:id>')
-
-class UserByID(Resource):
-   def get(self, id):
-      try:
-         user = User.query.filter(User.id == id).first()
-         user_dict = user.to_dict()
-
-         return user_dict, 200
-      
-      except:
-         error = {"error": "no user found"}
-         return error, 400
-      
-   def patch(self, id):
-      try:
-         data = request.get_json()
-
-         user = User.query.filter(User.id == id).first()
-
-         for attr in data:
-            if attr == 'instructors':
-               instructors_list = data.get(attr)
-               try:
-                  print(f'original attribute: {user.instructors}')
-                  print(f'new instructor list {instructors_list}')
-                  setattr(user, attr, instructors_list)
-                  
-               except:
-                  error = {"error": "there was an error updating the instructors attribute"}
-                  return error
-            else:
-               setattr(user, attr, data.get(attr))
-         
-         db.session.commit()
-
-         user_dict = user.to_dict()
-
-         return user_dict, 200
-
-      except:
-         error = {"error": "there was an error updating the instructors attribute"}
-         return error, 422
-
-api.add_resource(UserByID, '/api/user_by_id/<int:id>')
 
 class AddLesson(Resource):
    def post(self):
       data=request.get_json()
       
-
       if data:
          try:
             for attr in data:
                if attr == 'date_time':
-                  print(f"data from front end: {data.get(attr)}")
                   datetime_str = parser.parse(data.get(attr))
 
-
-                  # date_str = data.get(attr).replace("T", "-").replace(",","").replace("Z", "").split("-")
-                  
-                  # year = date_str[0]
-                  # month = date_str[1]
-                  # day = date_str[2]
-                  # time = date_str[3].split(":")
-                  # seconds_data = time[2].split(".")
-         
-                  # hour = time[0]
-                  # minutes = time[1]
-                  # seconds = seconds_data[0]
-  
-                  # date_str = f'{year},{month},{day},{hour},{minutes},{seconds}'
-         
-                  # format = '%Y,%m,%d,%H,%M,%S'
-                  # datetime_str = datetime.strptime(date_str, format)
-
-            
                   lesson = Lesson(
                      user_id = data.get('user_id'),
                      instructor_id = data.get('instructor_id'),
@@ -243,7 +169,6 @@ class CreateInstructor(Resource):
          instructor_dict = instructor.to_dict()
 
          return instructor_dict, 201
-
       except:
          error={'error': 'invalid input'}
          return error, 422
@@ -270,6 +195,37 @@ class Lessons(Resource):
       return lessons, 200
    
 api.add_resource(Lessons, '/api/lessons')
+
+class UserByID(Resource):
+   def get(self, id):
+      try:
+         user = User.query.filter(User.id == id).first()
+         user_dict = user.to_dict()
+
+         return user_dict, 200
+      except:
+         error = {"error": "no user found"}
+         return error, 400
+      
+   def patch(self, id):
+      try:
+         data = request.get_json()
+
+         user = User.query.filter(User.id == id).first()
+
+         for attr in data:
+            setattr(user, attr, data.get(attr))
+         
+         db.session.commit()
+
+         user_dict = user.to_dict()
+
+         return user_dict, 200
+      except:
+         error = {"error": "there was an error updating the instructors attribute"}
+         return error, 422
+
+api.add_resource(UserByID, '/api/user_by_id/<int:id>')
 
 
 

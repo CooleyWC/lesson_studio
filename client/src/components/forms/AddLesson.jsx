@@ -13,11 +13,6 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
     const instructorIDs = allInstructors.map(instructor=>instructor.id)
 
     const submitLesson = (values)=>{
-        // console.log(values.time.toLocaleString())
-        // console.log(values.time.$d.toLocaleDateString())
-        // console.log(`hours: ${values.time.$d.getHours()}`)
-        // console.log(`hours: ${values.time.$d.getMinutes()}`)
-        // console.log(`hours: ${values.time.$d.getSeconds()}`)
         const year = values.date.$y
         const month = values.date.$M
         const day = values.date.$D
@@ -25,23 +20,19 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
         const minutes = values.time.$d.getMinutes()
         const seconds = values.time.$d.getSeconds()
         const newDate = new Date(year, month, day, hours, minutes, seconds)
-        console.log(newDate)
-
 
         const lessonObj = {
             user_rating: false,
             user_id: user.id,
             date_time: newDate,
-            // date_time: values.time.$d,
             instructor_id: values.instructor_id
         }
-        // console.log(lessonObj)
         handleScheduleLesson(lessonObj)
     }
 
     const lessonSchema = yup.object().shape({
         date: yup
-            .date()
+            .date('must have a date')
             .required('Required'),
         time: yup
             .date('must have a time')
@@ -63,8 +54,6 @@ function AddLesson({allInstructors, user, handleScheduleLesson}) {
         validationSchema: lessonSchema,
         onSubmit: submitLesson,
     })
-
-    // console.log(formik)
 
     return (
         <Paper sx={{backgroundColor: 'white', height: '80px', paddingTop: '15px', paddingBottom: '15px', width: '100%'}}>

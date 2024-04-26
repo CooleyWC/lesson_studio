@@ -46,7 +46,6 @@ function App() {
         return lesson
       }
     })
-
     const updatedUser = {...user, lessons:updatedLessons}
     update(updatedUser)
   }
@@ -80,7 +79,6 @@ function App() {
     for(let i=0; i<instructorsOnDash.length; i++){
       if(postDeleteInstructors[i] && instructorsOnDash[i] && instructorsOnDash[i].id === postDeleteInstructors[i].id){
         instructorsPostDelete.push(instructorsOnDash[i])
-        // console.log(postDeleteInstructors[i].id, instructorsOnDash[i].id)
       } else {
         console.log('instructors updated')
       }
@@ -92,7 +90,6 @@ function App() {
   }
 
   const handleAddInstructor = (newTeacher)=>{
-    console.log(newTeacher)
     setAllInstructors([...allInstructors, newTeacher])
   }
   

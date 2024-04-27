@@ -61,10 +61,12 @@ function Signup() {
         username: yup
             .string('Enter your name')
             .min(3, 'Must be at least 3 characters')
-            .max(30, 'Must be 30 characters or less'),
+            .max(30, 'Must be 30 characters or less')
+            .required('Username is required'),
         age: yup
             .number('Enter your age')
-            .min(3, 'You must be older than 3 to enroll'),
+            .min(3, 'You must be older than 3 to enroll')
+            .required('You must enter your age'),
         password: yup
             .string('Enter your password')
             .min(8, 'Password should be a minimun of 8 characters')
@@ -167,6 +169,9 @@ function Signup() {
                                 input={<OutlinedInput label="Primary Instrument"/>}
                                 value={formik.values.primary_instrument}
                                 onChange={formik.handleChange}
+                                label='primary_instrument'
+                                error={formik.touched.primary_instrument && Boolean(formik.errors.primary_instrument)}
+                                helperText={formik.touched.primary_instrument && formik.errors.primary_instrument}
                             >
                                 {VALID_INSTRUMENTS.map((instrument)=>{
                                     return (<MenuItem

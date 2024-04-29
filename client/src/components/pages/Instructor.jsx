@@ -94,7 +94,7 @@ function Instructor() {
 
             const instructorData = await res.json()
             if (!res.ok){
-                console.log('uh oh - create instructor failed', instructorData.message)
+                console.log('Error: create instructor failed', instructorData.message)
                 return
             }
             handleAddInstructor(instructorData)

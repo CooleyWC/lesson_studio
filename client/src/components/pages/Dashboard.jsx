@@ -53,7 +53,6 @@ function Dashboard() {
     }
 
     const handleScheduleLesson = (obj)=>{
-        console.log(obj)
         fetch('/api/add_lesson', {
             method: "POST",
             headers: {
@@ -89,7 +88,7 @@ function Dashboard() {
         )
     })
 
-    let lessons = user.lessons
+    const lessons = user.lessons
 
     const lessonsMap = lessons.map((lesson)=>{
         return (

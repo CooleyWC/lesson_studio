@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Grid, Container, FormControl, TextField, Button, Divider, InputLabel, Select, OutlinedInput, MenuItem, Typography} from '@mui/material';
+import {Box, Grid, Container, FormControl, TextField, Button, Divider, InputLabel, Select, OutlinedInput, MenuItem, Typography, FormHelperText} from '@mui/material';
 import { useOutletContext } from 'react-router-dom';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
@@ -117,7 +117,7 @@ function Instructor() {
         validationSchema: createInstructorSchema,
         onSubmit: submitInstructor,
     })
-    console.log(formik.errors)
+
     return (
         <Container className='container' sx={containerStyle}>
         <Box sx={boxStyle}>
@@ -136,7 +136,7 @@ function Instructor() {
                             />
                         </FormControl>
                     </Grid>
-                    <Grid item sx={{marginTop: '20px', marginBottom:'20px'}}>
+                    <Grid item sx={{marginBottom:'20px'}}>
                         <FormControl>
                             <TextField 
                                 id='email'
@@ -186,6 +186,7 @@ function Instructor() {
                                 input={<OutlinedInput label="Instrument"/>}
                                 value={formik.values.instrument}
                                 onChange={formik.handleChange}
+                                error={formik.touched.instrument && Boolean(formik.errors.instrument)}
                             >
                                 {VALID_INSTRUMENTS.map((instrument)=>{
                                     return (<MenuItem
@@ -195,8 +196,8 @@ function Instructor() {
                                         {instrument}
                                     </MenuItem>)
                                 })}
-
                             </Select>
+                            <FormHelperText>{formik.touched.instrument && formik.errors.instrument}</FormHelperText>
                         </FormControl>
                     </Grid>
                     <Grid item sx={{marginBottom:'20px'}}>

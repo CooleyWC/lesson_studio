@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, FormControl, Typography, Grid, TextField, Box , Button, Divider, InputLabel, Select, OutlinedInput, MenuItem} from '@mui/material';
+import { Container, FormControl, Typography, Grid, TextField, Box , Button, Divider, InputLabel, Select, OutlinedInput, MenuItem, FormHelperText} from '@mui/material';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 import {useAuth} from '../context/AuthProvider';
@@ -69,7 +69,7 @@ function Signup() {
             .required('You must enter your age'),
         password: yup
             .string('Enter your password')
-            .min(8, 'Password should be a minimun of 8 characters')
+            .min(8, 'Password should be a minimum of 8 characters')
             .required('Password is required'),
         primary_instrument: yup
             .string('Select an instrument')
@@ -171,7 +171,6 @@ function Signup() {
                                 onChange={formik.handleChange}
                                 label='primary_instrument'
                                 error={formik.touched.primary_instrument && Boolean(formik.errors.primary_instrument)}
-                                helperText={formik.touched.primary_instrument && formik.errors.primary_instrument}
                             >
                                 {VALID_INSTRUMENTS.map((instrument)=>{
                                     return (<MenuItem
@@ -181,8 +180,8 @@ function Signup() {
                                         {instrument}
                                     </MenuItem>)
                                 })}
-
                             </Select>
+                            <FormHelperText>{formik.touched.primary_instrument && formik.errors.primary_instrument}</FormHelperText>
                         </FormControl>
                     </Grid>
                     <Grid item sx={{marginBottom:'20px'}}>

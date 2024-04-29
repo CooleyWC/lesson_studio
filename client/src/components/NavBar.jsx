@@ -54,7 +54,6 @@ function NavBar() {
                 console.error('logout failed')
             }
             logout()
-            console.log('successful logout')
         } catch (error){
             console.error(error.message)
             return error
@@ -83,7 +82,7 @@ function NavBar() {
                     >
                         The Lesson Studio
                     </Typography>
-                    {/* extra small screen */}
+
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
                             size='large'
@@ -143,7 +142,7 @@ function NavBar() {
                             )}
                         </Menu>
                     </Box>
-                    {/* small screen */}
+                
                     <Typography
                         variant='h5'
                         noWrap
@@ -162,7 +161,7 @@ function NavBar() {
                     >
                         The Lesson Studio
                     </Typography>
-                    {/* desktop */}
+           
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}, justifyContent: 'flex-end'}}>
                         {user ? (
                             isUser.map(({page, route})=>(

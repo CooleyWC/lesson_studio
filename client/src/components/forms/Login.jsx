@@ -60,15 +60,17 @@ function Login() {
                 body: JSON.stringify(values)
             })
             const userData = await res.json()
+
             if (!res.ok){
-                console.log('uh oh - login failed', userData.message)
+                alert(userData.error)
                 return
+            } else {
+                login(userData)
+                navigate('/dashboard')
             }
-            login(userData)
-            navigate('/dashboard')
         } catch (error) {
             console.error('error logging in: ', error.message)
-            return error
+            return
         }
     }
 

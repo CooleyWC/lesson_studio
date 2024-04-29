@@ -33,7 +33,7 @@ const noUser = [
 
 function NavBar() {
 
-    const {user, login, logout} = useAuth();
+    const {user, logout} = useAuth();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null)
 

@@ -51,7 +51,6 @@ class Login(Resource):
          user=User.query.filter(User.email==email).first()
          password=request.get_json()['password']
          if not user:
-
             error = {'error': 'user does not exist - please create an account'} 
             return error, 400
          if user.authenticate(password):

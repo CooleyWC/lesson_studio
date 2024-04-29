@@ -47,7 +47,6 @@ function Dashboard() {
         .then((res)=>{
             if(res.ok){
                 handleLessonDelete(id, instructorsOnDash)
-                console.log(`lesson: ${id} was deleted successfully`)
             }
         })
     }
@@ -63,7 +62,6 @@ function Dashboard() {
         .then((res)=>{
             if(res.ok){
                 res.json().then(lesson=>{
-                    console.log('added lesson: ', lesson)
                     handleAddLesson(lesson, instructorsOnDash)
                 })
             } else {

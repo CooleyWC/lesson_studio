@@ -50,12 +50,20 @@ class Login(Resource):
          email=request.get_json()['email']
          user=User.query.filter(User.email==email).first()
          password=request.get_json()['password']
+         if not user:
+
+            error = {'error': 'user does not exist - please create an account'} 
+            return error, 400
          if user.authenticate(password):
             session['user_id'] = user.id
             return user.to_dict(), 200
+         else:
+            error = {'error': 'incorrect password'}
+            return error, 401
       except:
-         error = {'error': 'you are logged out'}
+         error = {'error': 'incorrect input'}
          return error, 401
+      
       
 api.add_resource(Login, '/api/login', endpoint='login')
 

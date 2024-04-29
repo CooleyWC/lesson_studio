@@ -31,7 +31,6 @@ function Dashboard() {
         .then((res)=>{
             if(res.ok){
                 res.json().then(updatedLesson=>{
-                    console.log('response successful', updatedLesson)
                     handleLikeUpdate(updatedLesson)
                 })
             } else {

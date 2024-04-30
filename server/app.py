@@ -126,7 +126,6 @@ class LessonByID(Resource):
 api.add_resource(LessonByID, '/api/lessons/<int:id>')
 
 class Lessons(Resource):
-
    def get(self):
       lessons = [lesson.to_dict() for lesson in Lesson.query.all()]
       return lessons, 200
@@ -162,7 +161,6 @@ class Lessons(Resource):
 api.add_resource(Lessons, '/api/lessons')
 
 class Instructors(Resource):
-
    def get(self):
         instructors = [instructor.to_dict() for instructor in Instructor.query.all()]
         return instructors, 200
@@ -229,8 +227,6 @@ class UserByID(Resource):
          return error, 422
 
 api.add_resource(UserByID, '/api/users/<int:id>')
-
-
 
 
 if __name__ == "__main__":

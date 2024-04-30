@@ -51,7 +51,7 @@ function Dashboard() {
     }
 
     const handleScheduleLesson = (obj)=>{
-        fetch('/api/add_lesson', {
+        fetch('/api/lessons', {
             method: "POST",
             headers: {
                 "Content-type": "application/json"

@@ -125,7 +125,12 @@ class LessonByID(Resource):
       
 api.add_resource(LessonByID, '/api/lessons/<int:id>')
 
-class AddLesson(Resource):
+class Lessons(Resource):
+
+   def get(self):
+      lessons = [lesson.to_dict() for lesson in Lesson.query.all()]
+      return lessons, 200
+
    def post(self):
       data=request.get_json()
       
@@ -154,7 +159,7 @@ class AddLesson(Resource):
       else:
          print('there was an error creating the lesson')
       
-api.add_resource(AddLesson, '/api/add_lesson')
+api.add_resource(Lessons, '/api/lessons')
 
 class Instructors(Resource):
 
@@ -193,13 +198,6 @@ class Users(Resource):
       return users, 200
 
 api.add_resource(Users, '/api/users')
-
-class Lessons(Resource):
-   def get(self):
-      lessons = [lesson.to_dict() for lesson in Lesson.query.all()]
-      return lessons, 200
-   
-api.add_resource(Lessons, '/api/lessons')
 
 class UserByID(Resource):
    def get(self, id):

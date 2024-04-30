@@ -156,7 +156,12 @@ class AddLesson(Resource):
       
 api.add_resource(AddLesson, '/api/add_lesson')
 
-class CreateInstructor(Resource):
+class Instructors(Resource):
+
+   def get(self):
+        instructors = [instructor.to_dict() for instructor in Instructor.query.all()]
+        return instructors, 200
+
    def post(self):
       json=request.get_json()
 
@@ -179,13 +184,6 @@ class CreateInstructor(Resource):
       except:
          error={'error': 'invalid input'}
          return error, 422
-
-api.add_resource(CreateInstructor, '/api/create_instructor', endpoint='create_instructor')
-
-class Instructors(Resource):
-    def get(self):
-        instructors = [instructor.to_dict() for instructor in Instructor.query.all()]
-        return instructors, 200
 
 api.add_resource(Instructors, '/api/instructors')
 
@@ -232,7 +230,7 @@ class UserByID(Resource):
          error = {"error": "there was an error updating the instructors attribute"}
          return error, 422
 
-api.add_resource(UserByID, '/api/user_by_id/<int:id>')
+api.add_resource(UserByID, '/api/users/<int:id>')
 
 
 

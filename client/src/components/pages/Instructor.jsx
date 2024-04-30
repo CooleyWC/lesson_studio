@@ -84,7 +84,7 @@ function Instructor() {
     const submitInstructor = async (values)=>{
         console.log(values)
         try {
-            const res = await fetch('/api/create_instructor', {
+            const res = await fetch('/api/instructors', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'

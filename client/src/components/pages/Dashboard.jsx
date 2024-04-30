@@ -21,7 +21,7 @@ function Dashboard() {
 
     const handleLessonUpdate = (id, newRating)=>{
 
-        fetch(`/api/lesson_by_id/${id}`,{
+        fetch(`/api/lessons/${id}`,{
             method: "PATCH",
             headers: {
                 "Content-type": "application/json"
@@ -40,7 +40,7 @@ function Dashboard() {
     }
 
     const handleDelete = (id)=>{
-        fetch(`/api/lesson_by_id/${id}`,{
+        fetch(`/api/lessons/${id}`,{
             method: "DELETE"
         })
         .then((res)=>{

@@ -123,7 +123,7 @@ class LessonByID(Resource):
          error = {"error": "there was a problem deleting the lesson"}
          return error, 422
       
-api.add_resource(LessonByID, '/api/lesson_by_id/<int:id>')
+api.add_resource(LessonByID, '/api/lessons/<int:id>')
 
 class AddLesson(Resource):
    def post(self):

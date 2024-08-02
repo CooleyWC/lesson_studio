@@ -21,7 +21,6 @@ class User(db.Model, SerializerMixin):
 
     lessons = db.relationship('Lesson', back_populates='user', cascade='all, delete-orphan')
     instructors = db.relationship('Instructor', secondary='lessons', back_populates='users')
-    # instructors = association_proxy('lessons', 'instructor')
 
     @hybrid_property
     def password_hash(self):
@@ -59,7 +58,6 @@ class User(db.Model, SerializerMixin):
     
     @validates('primary_instrument')
     def validate_primary_instrument(self, key, primary_instrument):
-        # fix all the spellings
         VALID_INSTUMENTS = ['piano', 'drums', 'bass', 'guitar', 'trumpet','trombone', 'tuba', 'french horn', 'cello', 'violin', 'viola', 'voice']
 
         if not any(instrument in primary_instrument for instrument in VALID_INSTUMENTS):
@@ -81,7 +79,6 @@ class Instructor(db.Model, SerializerMixin):
     bio=db.Column(db.String, nullable=False)
     experience=db.Column(db.Integer, nullable=False, default=0)
     instrument=db.Column(db.String, nullable=False)
-    # validate photo?
     photo=db.Column(db.String)
 
     lessons = db.relationship('Lesson', back_populates='instructor', cascade='all, delete-orphan')

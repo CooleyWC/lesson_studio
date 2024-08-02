@@ -2,8 +2,10 @@ import {Link, NavLink} from 'react-router-dom';
 import {AppBar, Container, Typography, Toolbar, IconButton, Button, Box, Menu, MenuItem} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from './context/AuthProvider';
+import {useState} from 'react'
 
 import React from 'react';
+// test
 
 const isUser = [
     {
@@ -18,6 +20,7 @@ const isUser = [
         page: 'Instructor',
         route: '/instructor',
     }
+    
 ]
 
 const noUser = [
@@ -32,6 +35,8 @@ const noUser = [
 ]
 
 function NavBar() {
+
+    const [newUsers, setNewUsers] = useState([])
 
     const {user, logout} = useAuth();
 
@@ -59,10 +64,20 @@ function NavBar() {
             return error
         }
     }
+
+    const handleClick = ()=>{
+        fetch('/api/get_users', {
+            method: 'GET'
+        })
+        .then(res=>res.json())
+        .then(sorted_users=>setNewUsers(sorted_users))
+    }
+    console.log(newUsers)
     
     return (
         <AppBar position='fixed' sx={{backgroundColor: '#778DA9'}}>
             <Container maxWidth='xl'>
+                <button onClick={handleClick}>Click Here</button>
                 <Toolbar disableGutters>
 
                     <Typography

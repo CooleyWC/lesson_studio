@@ -228,6 +228,18 @@ class UserByID(Resource):
 
 api.add_resource(UserByID, '/api/users/<int:id>')
 
+class GetUsers(Resource):
+   def get(self):
+      # users names and ages
+      # sort youngest to oldest
+      users = [user.to_dict() for user in User.query.all()]
+      sorted_users = sorted(users, key=lambda user: user['age'])
+
+      return sorted_users, 200
+
+
+api.add_resource(GetUsers, '/api/get_users')
+
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
